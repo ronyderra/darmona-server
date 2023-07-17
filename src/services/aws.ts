@@ -33,22 +33,22 @@ export const getSingleFile = async (id: string) => {
   }
 };
 
-const deleteSingleFile = async (Key: string) => {
-  try {
-    return await s3.deleteObject({ Bucket, Key }).promise();
-  } catch (err) {
-    return err;
-  }
-};
+// const deleteSingleFile = async (Key: string) => {
+//   try {
+//     return await s3.deleteObject({ Bucket, Key }).promise();
+//   } catch (err) {
+//     return err;
+//   }
+// };
 
-const deleteMultipleFiles = async (Objects: any) => {
-  const params = { Bucket, Delete: { Objects, Quiet: false } };
-  try {
-    return s3.deleteObjects(params).promise();
-  } catch (err) {
-    return err;
-  }
-};
+// const deleteMultipleFiles = async (Objects: any) => {
+//   const params = { Bucket, Delete: { Objects, Quiet: false } };
+//   try {
+//     return s3.deleteObjects(params).promise();
+//   } catch (err) {
+//     return err;
+//   }
+// };
 
 // const uploadSingleFile = multer({
 //   fileFilter: (req, file, cb) => {
@@ -80,6 +80,6 @@ module.exports = {
   //   uploadSingleFile,
   getSingleFile,
   getAllFiles,
-  deleteSingleFile,
-  deleteMultipleFiles,
+  //   deleteSingleFile,
+  //   deleteMultipleFiles,
 };
