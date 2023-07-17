@@ -4,7 +4,7 @@ import { config } from "dotenv";
 import { Server } from "socket.io";
 import http from "http";
 import router from "./routes/routes";
-import { getAllFiles, getSingleFile } from "./services/aws";
+import { getAllFiles, getFile, updateFile } from "./services/aws";
 config();
 
 const port = process.env.PORT || 3030;
@@ -31,6 +31,6 @@ clientAppSocket.on("connection", (socket) => {
 
 export default server.listen(port, async () => {
   console.log(`Server runs on port ${port}`);
-  const data = await getSingleFile("015fef63-b6f1-4a47-995e-7941fe462ee6");
+  const data = await getFile("015fef63-b6f1-4a47-995e-7941fe462ee6");
   console.log(data);
 });
