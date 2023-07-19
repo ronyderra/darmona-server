@@ -35,10 +35,34 @@ export const getFile = async (id: string) => {
 
 export const updateFile = async (id: string, data: any) => {
   try {
-    s3.getObject({
-      Bucket,
-      Key: `campaigns/${id}.json`,
-    });
+    s3.getObject(
+      {
+        Bucket,
+        Key: `campaigns/${id}.json`,
+      },
+      function (err, data) {
+        if (err) {
+          console.error("Error retrieving the JSON file:", err);
+        } else {
+          const existingJson = JSON.parse(data.Body.toString("utf-8"));
+          existingJson.new_key = "new_value";
+          const updatedJsonData = JSON.stringify(existingJson);
+          const putParams = {
+            Bucket,
+            Key: `campaigns/${id}.json`,
+            Body: updatedJsonData,
+            ContentType: "application/json", 
+          };
+          s3.putObject(putParams, function (err) {
+            if (err) {
+              console.error("Error updating the JSON file:", err);
+            } else {
+              console.log("JSON file updated successfully!");
+            }
+          });
+        }
+      }
+    );
   } catch (err) {
     return err;
   }
