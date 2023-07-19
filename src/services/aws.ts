@@ -33,7 +33,7 @@ export const getFile = async (id: string) => {
   }
 };
 
-export const updateFile = async (id: string, data: any) => {
+export const updateFile = async (id: string, newData: any) => {
   try {
     s3.getObject(
       {
@@ -45,13 +45,17 @@ export const updateFile = async (id: string, data: any) => {
           console.error("Error retrieving the JSON file:", err);
         } else {
           const existingJson = JSON.parse(data.Body.toString("utf-8"));
-          existingJson.new_key = "new_value";
+          for (const key in existingJson) {
+            if (newData.hasOwnProperty(key)) {
+              existingJson[key] = newData[key];
+            }
+          }
           const updatedJsonData = JSON.stringify(existingJson);
           const putParams = {
             Bucket,
             Key: `campaigns/${id}.json`,
             Body: updatedJsonData,
-            ContentType: "application/json", 
+            ContentType: "application/json",
           };
           s3.putObject(putParams, function (err) {
             if (err) {
@@ -68,8 +72,22 @@ export const updateFile = async (id: string, data: any) => {
   }
 };
 
+export const createFile = async (key: any, data: any) => {
+  try {
+    const params = {
+      Bucket,
+      Key: key,
+      Body: data,
+    };
+    return s3.upload(params).promise();
+  } catch (err) {
+    return err;
+  }
+};
+
 module.exports = {
   getFile,
   getAllFiles,
   updateFile,
+  createFile,
 };

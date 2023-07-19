@@ -31,6 +31,6 @@ clientAppSocket.on("connection", (socket) => {
 
 export default server.listen(port, async () => {
   console.log(`Server runs on port ${port}`);
-  // const data = await getFile("015fef63-b6f1-4a47-995e-7941fe462ee6");
-  // console.log(data);
+  const data = await getAllFiles();
+  console.log(data);
 });
