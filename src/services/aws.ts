@@ -2,92 +2,95 @@ import AWS from "aws-sdk";
 import { config } from "dotenv";
 config();
 
-AWS.config.update({
-  secretAccessKey: process.env.SECRET_ACCESS_KEY,
-  accessKeyId: process.env.ACCESS_KEY_ID,
-  region: process.env.REGION,
-});
+class S3FileManager {
+  s3: AWS.S3;
+  Bucket: string;
+  constructor() {
+    AWS.config.update({
+      secretAccessKey: process.env.SECRET_ACCESS_KEY,
+      accessKeyId: process.env.ACCESS_KEY_ID,
+      region: process.env.REGION,
+    });
 
-const s3 = new AWS.S3();
-const Bucket = process.env.BUCKET_NAME_PRODUCTION || "";
-
-export const getAllFiles = async () => {
-  try {
-    return await s3.listObjectsV2({ Bucket }).promise();
-  } catch (err) {
-    return err;
+    this.s3 = new AWS.S3();
+    this.Bucket = process.env.BUCKET_NAME_PRODUCTION || "";
   }
-};
 
-export const getFile = async (id: string) => {
-  try {
-    const obj = await s3
-      .getObject({
-        Bucket,
-        Key: `campaigns/${id}.json`,
-      })
-      .promise();
-    return JSON.parse(obj.Body.toString());
-  } catch (err) {
-    return err;
+  async getAllFiles() {
+    try {
+      return await this.s3.listObjectsV2({ Bucket: this.Bucket }).promise();
+    } catch (err) {
+      return err;
+    }
   }
-};
 
-export const updateFile = async (id: string, newData: any) => {
-  try {
-    s3.getObject(
-      {
-        Bucket,
-        Key: `campaigns/${id}.json`,
-      },
-      function (err, data) {
-        if (err) {
-          console.error("Error retrieving the JSON file:", err);
-        } else {
-          const existingJson = JSON.parse(data.Body.toString("utf-8"));
-          for (const key in existingJson) {
-            if (newData.hasOwnProperty(key)) {
-              existingJson[key] = newData[key];
+  async getFile(id) {
+    try {
+      const obj = await this.s3
+        .getObject({
+          Bucket: this.Bucket,
+          Key: `campaigns/${id}.json`,
+        })
+        .promise();
+      return JSON.parse(obj.Body.toString());
+    } catch (err) {
+      return err;
+    }
+  }
+
+  async updateFile(id, newData) {
+    try {
+      this.s3.getObject(
+        {
+          Bucket: this.Bucket,
+          Key: `campaigns/${id}.json`,
+        },
+        (err, data) => {
+          if (err) {
+            console.error("Error retrieving the JSON file:", err);
+          } else {
+            const existingJson = JSON.parse(data.Body.toString("utf-8"));
+            for (const key in existingJson) {
+              if (newData.hasOwnProperty(key)) {
+                existingJson[key] = newData[key];
+              }
             }
+            const updatedJsonData = JSON.stringify(existingJson);
+            const putParams = {
+              Bucket: this.Bucket,
+              Key: `campaigns/${id}.json`,
+              Body: updatedJsonData,
+              ContentType: "application/json",
+            };
+            this.s3.putObject(putParams, (err) => {
+              if (err) {
+                console.error("Error updating the JSON file:", err);
+              } else {
+                console.log("JSON file updated successfully!");
+              }
+            });
           }
-          const updatedJsonData = JSON.stringify(existingJson);
-          const putParams = {
-            Bucket,
-            Key: `campaigns/${id}.json`,
-            Body: updatedJsonData,
-            ContentType: "application/json",
-          };
-          s3.putObject(putParams, function (err) {
-            if (err) {
-              console.error("Error updating the JSON file:", err);
-            } else {
-              console.log("JSON file updated successfully!");
-            }
-          });
         }
-      }
-    );
-  } catch (err) {
-    return err;
+      );
+    } catch (err) {
+      return err;
+    }
   }
-};
 
-export const createFile = async (key: any, data: any) => {
-  try {
-    const params = {
-      Bucket,
-      Key: key,
-      Body: data,
-    };
-    return s3.upload(params).promise();
-  } catch (err) {
-    return err;
+  async createFile(key, data) {
+    try {
+      const params = {
+        Bucket: this.Bucket,
+        Key:  `campaigns/${key}.json`,
+        Body: JSON.stringify(data),
+      };
+      return this.s3.upload(params).promise();
+    } catch (err) {
+      return err;
+    }
   }
-};
+}
 
-module.exports = {
-  getFile,
-  getAllFiles,
-  updateFile,
-  createFile,
-};
+// Export a single instance of the class
+const s3FileManager = new S3FileManager();
+export default s3FileManager;
