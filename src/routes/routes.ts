@@ -1,6 +1,8 @@
 import express, { Request, Response } from "express";
-import { ErrorHandler } from "../utils/errorHandler";
+import addUser from "../controller/addUser";
 
 const router = express.Router();
+
+router.get("/addUser", addUser);
 
 export default router;

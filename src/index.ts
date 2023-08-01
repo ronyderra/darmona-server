@@ -6,7 +6,6 @@ import http from "http";
 import router from "./routes/routes";
 import s3FileManager from "./services/aws-s3";
 import mongoose from "mongoose";
-import { ErrorHandler } from "./utils/errorHandler";
 config();
 
 const port = process.env.PORT || 3030;
@@ -17,7 +16,6 @@ app.use(express.json());
 app.use(express.urlencoded());
 app.use(cors());
 app.use("/", router);
-app.use(ErrorHandler.handle);
 
 export const server = http.createServer(app);
 export const clientAppSocket = new Server(server, {

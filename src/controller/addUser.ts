@@ -1,26 +1,35 @@
-import { Request, Response } from 'express';
+import { Request, Response, NextFunction } from "express";
+import { validationResult } from "express-validator";
 import USER from "../models/user";
 
-//a function to add user (signature and message) to the DB
-export const addUser = async (req: Request, res: Response) => {
+const addUser = async (req: Request, res: Response, next: NextFunction) => {
+  // Use express-validator to validate the request body
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return res.status(400).json({ errors: errors.array() });
+  }
+
+  console.log("got here");
+  const {
+    username,
+    password,
+    aliases,
+    thriveId,
+    email,
+    blackPageDomains,
+    cmps,
+  } = req.body;
+
   try {
-    if (!req.body) {
-    }
-
-    const {
-      username,
-      password,
-      aliases,
-      thriveId,
-      email,
-      blackPageDomains,
-      cmps,
-    } = req.body;
-
-    // validate user does not exist
+    // validate user does not exist (your validation logic here)
 
     const result = await USER.createNew(req.body);
-  } catch (e: any) {
-    res.status(500).json({ message: e.toString() });
+
+    res.json(result);
+  } catch (error) {
+    // If any error occurs during the async operations, pass it to the global error handling middleware
+    next(error);
   }
 };
+
+export default addUser;
