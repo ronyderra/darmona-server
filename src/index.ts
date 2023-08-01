@@ -19,9 +19,7 @@ app.use(cors());
 app.use("/", router);
 app.use(ErrorHandler.handle);
 
-
 export const server = http.createServer(app);
-
 export const clientAppSocket = new Server(server, {
   cors: {
     origin: "*",
