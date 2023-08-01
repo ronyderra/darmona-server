@@ -1,7 +1,7 @@
 import { ObjectId } from "bson";
 import { model, Schema } from "mongoose";
 import { CustomDocumentBuild } from "../mongodb/documentDefaults";
-import { IUSERDocument, IUSERModel, IUSER } from "./interfaces/user";
+import { IUSERDocument, IUSERModel, IUSER ,CMP } from "./interfaces/user";
 
 export const docUSER = {
   username: { type: String },
@@ -18,6 +18,23 @@ export const schema = CustomDocumentBuild(docUSER, "users");
 schema.statics.findUser = async function findUser(
   username: string,
   password: string
+) {
+  try {
+    const query = this.findOne({ username, password });
+    return query.exec().then((doc: any) => doc);
+  } catch (error: any) {
+    console.log(error.message);
+    return undefined;
+  }
+};
+schema.statics.addUser = async function addUser(
+  username: string,
+  password: string,
+  aliases: string[] | undefined,
+  thriveId: string,
+  email: string,
+  blackPageDomains: string[] | undefined,
+  cmps: CMP[] | undefined,
 ) {
   try {
     const query = this.findOne({ username, password });

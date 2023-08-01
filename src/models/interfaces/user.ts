@@ -7,17 +7,18 @@ export interface IUSER {
   thriveId: string;
   email: string;
   blackPageDomains: string[];
-  cmps: [
-    {
-      name: string;
-      url: string;
-    }
-  ];
+  cmps: CMP[];
+}
+
+export interface CMP {
+  name: string;
+  url: string;
 }
 
 export interface IUSERDocument extends IUSER, Document {
   toJSON(): IUSERDocument;
 }
 export interface IUSERModel extends Model<IUSERDocument> {
+  createNew(data: IUSER): Promise<IUSERDocument>;
   findUser(username: string, password: string): Promise<IUSERDocument[]>;
 }
