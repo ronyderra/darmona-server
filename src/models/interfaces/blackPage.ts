@@ -1,23 +1,17 @@
 import { Document, Model } from "mongoose";
 
-export interface IUSER {
-  username: string;
-  password: string;
-  aliases: string[];
-  thriveId: string;
-  email: string;
-  blackPageDomains: string[];
-  cmps: [
-    {
-      name: string;
-      url: string;
-    }
-  ];
+export interface IBLACKPAGE {
+  domain: string;
+  lang:string;
+  template:string;
+  celeb:string;
+  offerPage:string;
+  url:string;
 }
 
-export interface IUSERDocument extends IUSER, Document {
-  toJSON(): IUSERDocument;
+export interface IBLACKPAGDocument extends IBLACKPAGE, Document {
+  toJSON(): IBLACKPAGDocument;
 }
-export interface IUSERModel extends Model<IUSERDocument> {
-  findUser(username: string, password: string): Promise<IUSERDocument[]>;
+export interface IBLACKPAGEModel extends Model<IBLACKPAGDocument> {
+  findUser(username: string, password: string): Promise<IBLACKPAGDocument[]>;
 }
