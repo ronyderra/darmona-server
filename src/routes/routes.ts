@@ -1,4 +1,5 @@
-import express from "express";
+import express, { Request, Response } from "express";
+import { ErrorHandler } from "../utils/errorHandler";
 
 const router = express.Router();
 

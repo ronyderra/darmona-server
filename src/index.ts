@@ -6,6 +6,7 @@ import http from "http";
 import router from "./routes/routes";
 import s3FileManager from "./services/aws-s3";
 import mongoose from "mongoose";
+import { ErrorHandler } from "./utils/errorHandler";
 config();
 
 const port = process.env.PORT || 3030;
@@ -16,6 +17,8 @@ app.use(express.json());
 app.use(express.urlencoded());
 app.use(cors());
 app.use("/", router);
+app.use(ErrorHandler.handle);
+
 
 export const server = http.createServer(app);
 
@@ -36,11 +39,10 @@ export default server.listen(port, async () => {
 });
 
 const options: any = { useNewUrlParser: true, useUnifiedTopology: true };
-mongoose.set('strictQuery', true);
+mongoose.set("strictQuery", true);
 mongoose.connect(MongoUrl, options);
 const connection = mongoose.connection;
 connection.on("error", (err) => console.error("connection error: ", err));
 connection.once("open", () => {
-  console.log("connected to: ", connection.name)
-
+  console.log("connected to: ", connection.name);
 });

@@ -1,7 +1,8 @@
+import { Request, Response } from 'express';
 import USER from "../models/user";
 
 //a function to add user (signature and message) to the DB
-export const addUser = async (req: any, res: any) => {
+export const addUser = async (req: Request, res: Response) => {
   try {
     if (!req.body) {
     }
@@ -15,7 +16,7 @@ export const addUser = async (req: any, res: any) => {
       blackPageDomains,
       cmps,
     } = req.body;
-    
+
     // validate user does not exist
 
     const result = await USER.createNew(req.body);
