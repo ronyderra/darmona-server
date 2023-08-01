@@ -31,8 +31,4 @@ clientAppSocket.on("connection", (socket) => {
 
 export default server.listen(port, async () => {
   console.log(`Server runs on port ${port}`);
-  const data = await s3FileManager.createFile("ronyTesting2" , { query_map: {
-    sub1: "sdfgsfdgsfgnsfghsdfhg"
-  },});
-  console.log(data);
 });
