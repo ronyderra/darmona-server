@@ -5,9 +5,11 @@ import { Server } from "socket.io";
 import http from "http";
 import router from "./routes/routes";
 import s3FileManager from "./services/aws-s3";
+import mongoose from "mongoose";
 config();
 
 const port = process.env.PORT || 3030;
+const MongoUrl: string = process.env.MONGO_URL || "";
 
 const app = express();
 app.use(express.json());
@@ -31,4 +33,14 @@ clientAppSocket.on("connection", (socket) => {
 
 export default server.listen(port, async () => {
   console.log(`Server runs on port ${port}`);
+});
+
+const options: any = { useNewUrlParser: true, useUnifiedTopology: true };
+mongoose.set('strictQuery', true);
+mongoose.connect(MongoUrl, options);
+const connection = mongoose.connection;
+connection.on("error", (err) => console.error("connection error: ", err));
+connection.once("open", () => {
+  console.log("connected to: ", connection.name)
+
 });
