@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from "express";
-import { validationResult } from "express-validator";
+import { body, validationResult } from "express-validator";
 import USER from "../models/user";
 
 const addUser = async (req: Request, res: Response, next: NextFunction) => {
