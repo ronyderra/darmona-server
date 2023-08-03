@@ -2,8 +2,8 @@ import express, { Request, Response } from "express";
 import { UserController } from "./validation";
 import addUser from "../controller/addUser";
 import { config } from "dotenv";
+import jwt from 'jsonwebtoken';
 config();
-var jwt = require("jsonwebtoken");
 
 function validateBearerToken(req, res, next) {
   const authHeader = req.headers["authorization"];

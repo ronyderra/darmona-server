@@ -7,7 +7,6 @@ const addUser = async (req: Request, res: Response) => {
   if (!errors.isEmpty()) {
     return res.status(400).json({ errors: errors.array() });
   }
-
   const {
     username,
     password,
@@ -17,16 +16,8 @@ const addUser = async (req: Request, res: Response) => {
     blackPageDomains,
     cmps,
   } = req.body;
-
-  try {
-    // validate user does not exist (your validation logic here)
-
-    const result = await USER.createNew(req.body);
-
-    res.json(result);
-  } catch (error) {
-    console.log(error.message);
-  }
+  const result = await USER.createNew(req.body);
+  return res.status(200).json(result);
 };
 
 export default addUser;
