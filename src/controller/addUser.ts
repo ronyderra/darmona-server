@@ -3,7 +3,6 @@ import { body, validationResult } from "express-validator";
 import USER from "../models/user";
 
 const addUser = async (req: Request, res: Response, next: NextFunction) => {
-  // Use express-validator to validate the request body
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
     return res.status(400).json({ errors: errors.array() });

@@ -5,10 +5,10 @@ import addUser from "../controller/addUser";
 const router = express.Router();
 const validate = new UserController();
 
-router.post("/addUser", validate.checkRequestBody , addUser);
-router.post("/deleteUser", validate.checkRequestBody , addUser);
-router.put("/updateUser", validate.checkRequestBody , addUser);
-router.get("/getUser", validate.checkRequestBody , addUser);
+router.post("/addUser", validate.addUser(), addUser);
+router.post("/deleteUser", validate.checkRequestBody, addUser);
+router.put("/updateUser", validate.checkRequestBody, addUser);
+router.get("/getUser", validate.checkRequestBody, addUser);
 
 // router.post("/addBlackPage", validate.checkRequestBody , addBlackPage);
 // router.post("/deleteBlackPage", validate.checkRequestBody , addBlackPage);
