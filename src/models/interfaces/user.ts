@@ -1,4 +1,5 @@
 import { Document, Model } from "mongoose";
+import { ObjectId } from "mongodb";
 
 export interface IUSER {
   username: string;
@@ -26,5 +27,6 @@ export interface IUSERDocument extends IUSER, Document {
 }
 export interface IUSERModel extends Model<IUSERDocument> {
   createNew(data: IUSER): Promise<IUSERDocument>;
+  getById(_id: ObjectId): Promise<IUSERDocument>;
   findUser(username: string, password: string): Promise<IUSERDocument>;
 }

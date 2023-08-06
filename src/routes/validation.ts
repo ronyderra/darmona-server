@@ -1,4 +1,4 @@
-import { body ,query } from "express-validator";
+import { body, query } from "express-validator";
 
 export class UserController {
   constructor() {}
@@ -30,6 +30,10 @@ export class UserController {
       .isLength({ min: 6 })
       .withMessage("Password must be at least 6 characters long")
       .escape(),
+    _id: query("_id")
+      .isLength({ min: 6 })
+      .withMessage("_id must be at least 6 characters long")
+      .escape(),
   };
 
   checkRequestBody(req, res, next) {
@@ -46,7 +50,7 @@ export class UserController {
     ];
   }
   getUser() {
-    return [this.queryValidations["username"], this.queryValidations["password"]];
+    return [this.queryValidations["_id"]];
   }
   login() {
     return [this.bodyValidations["username"], this.bodyValidations["password"]];

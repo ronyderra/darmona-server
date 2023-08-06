@@ -32,8 +32,7 @@ const router = express.Router();
 const validate = new UserController();
 
 router.post("/addUser", validateBearerToken, validate.addUser(), addUser);
-// router.post("/deleteUser", validateBearerToken, validate.addUser(), addUser);
-// router.put("/updateUser", validateBearerToken, validate.addUser(), addUser);
+router.put("/updateUser", validateBearerToken, validate.addUser(), addUser);
 router.get("/getUser", validateBearerToken, validate.getUser(), getUser);
 router.post("/login", validate.login(), login);
 
