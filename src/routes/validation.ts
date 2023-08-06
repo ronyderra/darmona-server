@@ -20,18 +20,18 @@ export class UserController {
       .isLength({ min: 6 })
       .withMessage("Password must be at least 6 characters long")
       .escape(),
-    imp: body("alias").notEmpty().withMessage("nust send alias").escape(),
-    ctype: body("ctype").notEmpty().withMessage("nust send ctype").escape(),
-    query: body("query").notEmpty().withMessage("nust send query").escape(),
-    alias: body("alias").notEmpty().withMessage("nust send alias").escape(),
-    ip: body("ip").notEmpty().withMessage("nust send ip").escape(),
-    track: body("track").notEmpty().withMessage("nust send track").escape(),
-    dc_ep: body("dc_ep").notEmpty().withMessage("nust send dc_ep").escape(),
+    imp: body("imp").notEmpty().withMessage("must send imp").escape(),
+    ctype: body("ctype").notEmpty().withMessage("must send ctype").escape(),
+    query: body("query").notEmpty().withMessage("must send query").escape(),
+    alias: body("alias").notEmpty().withMessage("must send alias").escape(),
+    ip: body("ip").notEmpty().withMessage("must send ip").escape(),
+    track: body("track").notEmpty().withMessage("must send track").escape(),
+    dc_ep: body("dc_ep").notEmpty().withMessage("must send dc_ep").escape(),
     query_map: body("query_map")
       .notEmpty()
-      .withMessage("nust send query_map")
+      .withMessage("must send query_map")
       .escape(),
-    eps: body("eps").notEmpty().withMessage("nust send eps").escape(),
+    eps: body("eps").notEmpty().withMessage("must send eps").escape(),
   };
   queryValidations = {
     username: query("username")

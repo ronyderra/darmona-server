@@ -3,7 +3,7 @@ import { UserController } from "./validation";
 import addUser from "../controller/addUser";
 import getUser from "../controller/getUser";
 import login from "../controller/login";
-import addCmp from "../controller/login";
+import addCmp from "../controller/addCmp";
 import updateUser from "../controller/updateUser";
 import { config } from "dotenv";
 import jwt from 'jsonwebtoken';
