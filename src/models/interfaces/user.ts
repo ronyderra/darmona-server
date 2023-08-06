@@ -8,6 +8,12 @@ export interface IUSER {
   email: string;
   blackPageDomains: string[];
   cmps: CMP[];
+  role: Roles;
+}
+
+export enum Roles {
+  Admin = "admin",
+  Affiliate = "affiliate",
 }
 
 export interface CMP {
