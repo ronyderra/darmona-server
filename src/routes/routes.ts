@@ -3,6 +3,7 @@ import { UserController } from "./validation";
 import addUser from "../controller/addUser";
 import getUser from "../controller/getUser";
 import login from "../controller/login";
+import addCmp from "../controller/login";
 import updateUser from "../controller/updateUser";
 import { config } from "dotenv";
 import jwt from 'jsonwebtoken';
@@ -37,7 +38,7 @@ router.get("/getUser", validateBearerToken, validate.getUser(), getUser);
 router.post("/addUser", validateBearerToken, validate.addUser(), addUser);
 router.put("/updateUser", validateBearerToken, validate.updateUser(), updateUser);
 
-
+router.post("/addCmp", validateBearerToken, validate.addCmp(), addCmp);
 
 
 // router.post("/addBlackPage", validate.checkRequestBody , addBlackPage);

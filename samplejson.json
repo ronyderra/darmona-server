@@ -1,0 +1,38 @@
+{
+    "id": 999999999999999,
+    "hid": "3eca5d72-0490-4102-8186-e49b52a66579",
+    "imp": { "count": 1, "recurring": true },
+    "ctype": "url",
+    "query": {
+      "keyword": { "type": "pattern", "cmp": "^[0-9a-zA-z.-_,/ ]+$" },
+      "adid": { "type": "pattern", "cmp": "^[0-9]+$" },
+      "msclkid": { "type": "pattern", "cmp": "^[0-9a-zA-z]+$" },
+      "matchtype": { "type": "pattern", "cmp": "^[a-zA-z]{1,3}$" },
+      "device": { "type": "pattern", "cmp": "^[0-9a-zA-z]+$" },
+      "targetid": { "type": "pattern", "cmp": "^[0-9a-zA-z-:]+$" },
+      "network": { "type": "pattern", "cmp": "^[a-zA-z]{1,3}$" },
+      "campaignid": { "type": "pattern", "cmp": "^[0-9]+$" }
+    },
+    "alias": "trak.blazefast.net",
+    "ip": true,
+    "track": true,
+    "dc_ep": "https://www.yahoo.com/entertainment/elon-musk-reveals-plan-fold-215308422.html?id={{CAMPAIGNID}}&channel={{TARGETID}}&clck={{MSCLKID}}",
+    "query_map": {
+      "sub1": "keyword",
+      "sub2": "adid",
+      "sub3": "msclkid",
+      "sub4": "matchtype",
+      "sub5": "device",
+      "sub6": "targetid",
+      "sub7": "network",
+      "sub8": "campaignid"
+    },
+    "eps": [
+      {
+        "geo": { "grp": ["CA"], "bl": false },
+        "weight": 1,
+        "ep": "https://givemes.com/click?trvid=10006&campaignid={{CAMPAIGNID}}&targetid={{TARGETID}}&matchtype={{MATCHTYPE}}&network={{NETWORK}}&device={{DEVICE}}&adid={{ADID}}&keyword={{KEYWORD}}&msclkid={{MSCLKID}}&querystring=bravo&feeditemid=john"
+      }
+    ]
+  }
+  
