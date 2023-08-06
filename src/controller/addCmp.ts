@@ -14,12 +14,11 @@ const addCmp = async (req: any, res: Response) => {
   }
 
   const user = await USER.getById(new ObjectId(req.body._id));
-
   if (!user) {
     return res.status(400).send("user not found");
   }
-  console.log(req.body);
-  const hid = "testing";
+
+  const hid = uuidv4();
   const id = await getId();
   try {
     const json: FULL_CMP_JSON = {
@@ -35,8 +34,8 @@ const addCmp = async (req: any, res: Response) => {
       query_map: req.body.query_map,
       eps: req.body.eps,
     };
-    
-    const file = await s3FileManager.createFile("testing", json);
+
+    const file = await s3FileManager.createFile(hid, json);
     if (file) {
       await incrementIdAndSave();
       user.cmps.push({
