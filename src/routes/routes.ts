@@ -3,6 +3,7 @@ import { UserController } from "./validation";
 import addUser from "../controller/addUser";
 import getUser from "../controller/getUser";
 import login from "../controller/login";
+import updateUser from "../controller/updateUser";
 import { config } from "dotenv";
 import jwt from 'jsonwebtoken';
 config();
@@ -31,10 +32,12 @@ function validateBearerToken(req, res, next) {
 const router = express.Router();
 const validate = new UserController();
 
-router.post("/addUser", validateBearerToken, validate.addUser(), addUser);
-router.put("/updateUser", validateBearerToken, validate.addUser(), addUser);
-router.get("/getUser", validateBearerToken, validate.getUser(), getUser);
 router.post("/login", validate.login(), login);
+router.get("/getUser", validateBearerToken, validate.getUser(), getUser);
+router.post("/addUser", validateBearerToken, validate.addUser(), addUser);
+router.put("/updateUser", validateBearerToken, validate.updateUser(), updateUser);
+
+
 
 
 // router.post("/addBlackPage", validate.checkRequestBody , addBlackPage);

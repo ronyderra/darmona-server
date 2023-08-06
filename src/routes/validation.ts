@@ -55,4 +55,7 @@ export class UserController {
   login() {
     return [this.bodyValidations["username"], this.bodyValidations["password"]];
   }
+  updateUser() {
+    return [this.queryValidations["_id"]];
+  }
 }
