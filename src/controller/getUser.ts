@@ -7,8 +7,8 @@ const getUser = async (req: Request, res: Response) => {
   if (!errors.isEmpty()) {
     return res.status(400).json({ errors: errors.array() });
   }
-  const { username, password } = req.body;
-  const result = await USER.findUser(username, password );
+  const { username, password } = req.query;
+  const result = await USER.findUser(String(username), String(password));
   return res.status(200).json(result);
 };
 
