@@ -17,6 +17,7 @@ const addUser = async (req: Request, res: Response) => {
     cmps,
   } = req.body;
   const result = await USER.createNew(req.body);
+  console.log({result})
   return res.status(200).json(result);
 };
 
