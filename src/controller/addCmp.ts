@@ -18,6 +18,33 @@ const addCmp = async (req: any, res: Response) => {
     return res.status(400).send("user not found");
   }
 
+  const { imp, ctype, query, alias, ip, track, dc_ep, query_map, eps } =
+    req.body;
+
+  let errorMsg = "";
+  switch (true) {
+    case !imp.count || Number(imp.count) < 1:
+      errorMsg = "imppression count must be larger than 0";
+      break;
+    case !imp.recurring || imp.recurring !== true:
+      errorMsg = "recurring must be true";
+      break;
+    case ctype !== "url":
+      errorMsg = "ctype must be url";
+      break;
+    case ip !== true:
+      errorMsg = "ip must be true";
+      break;
+    case track !== true:
+      errorMsg = "track must be true";
+      break;
+    default:
+      break;
+  }
+  if (errorMsg) {
+    return res.status(404).send(errorMsg);
+  }
+
   const hid = uuidv4();
   const id = await getId();
   try {
