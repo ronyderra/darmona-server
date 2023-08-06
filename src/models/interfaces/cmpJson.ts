@@ -11,7 +11,7 @@ export interface Add_CMP_JSON {
 }
 
 export interface FULL_CMP_JSON {
-  id: string;
+  id: number;
   hid: string;
   imp: IMP;
   ctype: string;
