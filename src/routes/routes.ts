@@ -7,13 +7,16 @@ config();
 
 function validateBearerToken(req, res, next) {
   const authHeader = req.headers["authorization"];
+
+  console.log(authHeader.startsWith("Bearer "))
   if (!authHeader || !authHeader.startsWith("Bearer ")) {
+    console.log("got here")
     return res
       .status(401)
       .json({ error: "Unauthorized - Bearer token not found" });
   }
   const token = authHeader.split(" ")[1];
-  jwt.verify(token, process.env.BEARER, (err, decodedToken) => {
+  jwt.verify(token, "password", (err, decodedToken) => {
     if (err) {
       return res
         .status(401)
