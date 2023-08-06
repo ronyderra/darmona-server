@@ -29,7 +29,7 @@ const addCmp = async (req: Request, res: Response) => {
     eps: req.body.eps,
   };
   console.log({ json });
-  const file = s3FileManager.createFile(hid, json);
+  const file = await s3FileManager.createFile("ronytest", json);
   if (file) {
     await incrementIdAndSave();
     user.cmps.push({
