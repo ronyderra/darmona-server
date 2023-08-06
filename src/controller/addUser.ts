@@ -16,9 +16,14 @@ const addUser = async (req: Request, res: Response) => {
     blackPageDomains,
     cmps,
   } = req.body;
-  const result = await USER.createNew(req.body);
-  console.log({result})
-  return res.status(200).json(result);
+  //add validate data
+  const user = await USER.findUser(username, password);
+  if (user) {
+    return res.status(200).json(user);
+  } else {
+    const result = await USER.createNew(req.body);
+    return res.status(200).json(result);
+  }
 };
 
 export default addUser;
