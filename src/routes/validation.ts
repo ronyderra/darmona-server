@@ -4,6 +4,10 @@ export class UserController {
   constructor() {}
 
   bodyValidations = {
+    _id: body("_id")
+      .isLength({ min: 6 })
+      .withMessage("_id must be at least 6 characters long")
+      .escape(),
     username: body("username")
       .notEmpty()
       .withMessage("Username is required")
@@ -56,6 +60,6 @@ export class UserController {
     return [this.bodyValidations["username"], this.bodyValidations["password"]];
   }
   updateUser() {
-    return [this.queryValidations["_id"]];
+    return [this.bodyValidations["_id"]];
   }
 }
