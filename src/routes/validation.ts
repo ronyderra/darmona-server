@@ -21,7 +21,7 @@ export class UserController {
       .withMessage("Password must be at least 6 characters long")
       .escape(),
     imp: body("alias").notEmpty().withMessage("nust send alias").escape(),
-    ctype: body("alias").notEmpty().withMessage("nust send alias").escape(),
+    ctype: body("ctype").notEmpty().withMessage("nust send ctype").escape(),
     query: body("query").notEmpty().withMessage("nust send query").escape(),
     alias: body("alias").notEmpty().withMessage("nust send alias").escape(),
     ip: body("ip").notEmpty().withMessage("nust send ip").escape(),
