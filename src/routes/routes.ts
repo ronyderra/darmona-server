@@ -1,14 +1,14 @@
 import express, { Request, Response } from "express";
 import { UserController } from "./validation";
 import addUser from "../controller/addUser";
+import getUser from "../controller/getUser";
 import { config } from "dotenv";
 import jwt from 'jsonwebtoken';
 config();
 
 function validateBearerToken(req, res, next) {
   const authHeader = req.headers["authorization"];
-
-  console.log(authHeader.startsWith("Bearer "))
+ 
   if (!authHeader || !authHeader.startsWith("Bearer ")) {
     console.log("got here")
     return res
@@ -31,9 +31,11 @@ const router = express.Router();
 const validate = new UserController();
 
 router.post("/addUser", validateBearerToken, validate.addUser(), addUser);
-router.post("/deleteUser", validateBearerToken, validate.addUser(), addUser);
-router.put("/updateUser", validateBearerToken, validate.addUser(), addUser);
-router.get("/getUser", validateBearerToken, validate.addUser(), addUser);
+// router.post("/deleteUser", validateBearerToken, validate.addUser(), addUser);
+// router.put("/updateUser", validateBearerToken, validate.addUser(), addUser);
+router.get("/getUser", validateBearerToken, validate.getUser(), getUser);
+router.post("/login", validateBearerToken, validate.addUser(), addUser);
+
 
 // router.post("/addBlackPage", validate.checkRequestBody , addBlackPage);
 // router.post("/deleteBlackPage", validate.checkRequestBody , addBlackPage);

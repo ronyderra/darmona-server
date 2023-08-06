@@ -1,18 +1,15 @@
-// import USER from "../models/user"
-// import { IUSERDocument } from "../models/interfaces/user"
+import { Request, Response } from "express";
+import { validationResult } from "express-validator";
+import USER from "../models/user";
 
+const getUser = async (req: Request, res: Response) => {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return res.status(400).json({ errors: errors.array() });
+  }
+  const { username, password } = req.body;
+  const result = await USER.findUser(username, password );
+  return res.status(200).json(result);
+};
 
-// export const getUser = async (req: any, res: any) => {
-//     try {
-//         if (!req.query) {
-//             respond(res, 404, "body missing")
-//             return
-//         }
-//         const { telegramUsername } = req.query
-//         let result: IUSERDocument | IUSERDocument[]
-//         result ? respond(res, 200, result) : respond(res, 405, "Error- user not found")
-//         return
-//     } catch (error: any) {
-//         res.status(500).json({ message: error.toString() });
-//     }
-// } 
+export default getUser;

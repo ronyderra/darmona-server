@@ -20,5 +20,5 @@ export interface IUSERDocument extends IUSER, Document {
 }
 export interface IUSERModel extends Model<IUSERDocument> {
   createNew(data: IUSER): Promise<IUSERDocument>;
-  findUser(username: string, password: string): Promise<IUSERDocument[]>;
+  findUser(username: string, password: string): Promise<IUSERDocument>;
 }

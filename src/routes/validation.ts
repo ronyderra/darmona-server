@@ -24,12 +24,14 @@ export class UserController {
     }
     next();
   }
-
   addUser() {
     return [
       this.validations["username"],
       this.validations["email"],
       this.validations["password"],
     ];
+  }
+  getUser() {
+    return [this.validations["username"], this.validations["password"]];
   }
 }
