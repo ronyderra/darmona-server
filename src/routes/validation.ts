@@ -29,6 +29,7 @@ export class UserController {
     dc_ep: body("dc_ep").notEmpty().withMessage("must send dc_ep").escape(),
     query_map: body("query_map").notEmpty().withMessage("must send query_map"),
     eps: body("eps").notEmpty().withMessage("must send eps"),
+    url: body("url").notEmpty().withMessage("must send url"),
   };
   queryValidations = {
     username: query("username")
@@ -84,5 +85,8 @@ export class UserController {
       this.bodyValidations["query_map"],
       this.bodyValidations["eps"],
     ];
+  }
+  updateCmp() {
+    return [this.bodyValidations["_id"], this.bodyValidations["url"]];
   }
 }
