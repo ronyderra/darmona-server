@@ -6,6 +6,7 @@ import http from "http";
 import router from "./routes/routes";
 import s3FileManager from "./services/aws-s3";
 import mongoose from "mongoose";
+import bodyParser from 'body-parser';
 config();
 
 const port = process.env.PORT || 3030;

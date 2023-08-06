@@ -16,6 +16,7 @@ const addUser = async (req: Request, res: Response) => {
     blackPageDomains,
     cmps,
   } = req.body;
+  console.log(req.body)
   //add validate data
   const user = await USER.findUser(username, password);
   if (user) {

@@ -20,18 +20,15 @@ export class UserController {
       .isLength({ min: 6 })
       .withMessage("Password must be at least 6 characters long")
       .escape(),
-    imp: body("imp").notEmpty().withMessage("must send imp").escape(),
+    imp: body("imp").notEmpty().withMessage("must send imp"),
     ctype: body("ctype").notEmpty().withMessage("must send ctype").escape(),
-    query: body("query").notEmpty().withMessage("must send query").escape(),
+    query: body("query").notEmpty().withMessage("must send query"),
     alias: body("alias").notEmpty().withMessage("must send alias").escape(),
     ip: body("ip").notEmpty().withMessage("must send ip").escape(),
     track: body("track").notEmpty().withMessage("must send track").escape(),
     dc_ep: body("dc_ep").notEmpty().withMessage("must send dc_ep").escape(),
-    query_map: body("query_map")
-      .notEmpty()
-      .withMessage("must send query_map")
-      .escape(),
-    eps: body("eps").notEmpty().withMessage("must send eps").escape(),
+    query_map: body("query_map").notEmpty().withMessage("must send query_map"),
+    eps: body("eps").notEmpty().withMessage("must send eps"),
   };
   queryValidations = {
     username: query("username")

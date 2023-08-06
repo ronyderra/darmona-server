@@ -7,18 +7,18 @@ import { incrementIdAndSave, getId } from "../services/fileManager";
 import { FULL_CMP_JSON } from "../models/interfaces/cmpJson";
 import { validationResult } from "express-validator";
 
-const addCmp = async (req: Request, res: Response) => {
+const addCmp = async (req: any, res: Response) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
     return res.status(400).json({ errors: errors.array() });
   }
 
-  const user = await USER.getById(new ObjectId(String(req.body._id)));
-  console.log(user);
+  const user = await USER.getById(new ObjectId(req.body._id));
+
   if (!user) {
     return res.status(400).send("user not found");
   }
-
+  console.log(req.body);
   const hid = "testing";
   const id = await getId();
   try {
@@ -35,17 +35,17 @@ const addCmp = async (req: Request, res: Response) => {
       query_map: req.body.query_map,
       eps: req.body.eps,
     };
-    console.log( json );
-    // const file = await s3FileManager.createFile("testing", json);
-    // if (file) {
-    //   await incrementIdAndSave();
-    //   user.cmps.push({
-    //     name: req.body.name,
-    //     url: `https://${req.body.alias}/?cmp=${hid}`,
-    //   });
-    //   const updated = await USER.updateById(req.body._id, user);
-    //   return res.status(200).json(updated);
-    // }
+    
+    const file = await s3FileManager.createFile("testing", json);
+    if (file) {
+      await incrementIdAndSave();
+      user.cmps.push({
+        name: req.body.name,
+        url: `https://${req.body.alias}/?cmp=${hid}`,
+      });
+      const updated = await USER.updateById(req.body._id, user);
+      return res.status(200).json(updated);
+    }
   } catch (error) {
     console.log(error.message);
     return res.status(404).json(error.message);
