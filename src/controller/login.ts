@@ -10,11 +10,10 @@ const login = async (req: any, res: any) => {
     if (!errors.isEmpty()) {
       return res.status(400).json({ errors: errors.array() });
     }
-    const { userName, password } = req.query;
-    const user = await USER.findUser(userName, password);
+    const { username, password } = req.body;
+    const user = await USER.findUser(username, password);
     if (user) {
-      const user = { userName, password };
-      const token = jwt.sign(user, process.env.BEARER, { expiresIn: "24h" });
+      const token = jwt.sign(req.body, process.env.BEARER, { expiresIn: "24h" });
       res.cookie("jwt", token, {
         httpOnly: true,
         secure: false,

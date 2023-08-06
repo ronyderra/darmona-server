@@ -34,4 +34,7 @@ export class UserController {
   getUser() {
     return [this.validations["username"], this.validations["password"]];
   }
+  login() {
+    return [this.validations["username"], this.validations["password"]];
+  }
 }
