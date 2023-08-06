@@ -1,4 +1,4 @@
-import { Document, model, Schema } from "mongoose";
+import { Schema } from "mongoose";
 import { ObjectId } from "mongodb";
 
 export const CustomDocumentBuild = (custDoc: any, collection?: string) => {
