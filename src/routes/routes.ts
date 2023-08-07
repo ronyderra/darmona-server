@@ -6,6 +6,7 @@ import login from "../controller/login";
 import addCmp from "../controller/addCmp";
 import updateUser from "../controller/updateUser";
 import updateCmp from "../controller/updateCmp";
+import getCmp from "../controller/getCmp";
 import { config } from "dotenv";
 import jwt from 'jsonwebtoken';
 config();
@@ -14,7 +15,6 @@ function validateBearerToken(req, res, next) {
   const authHeader = req.headers["authorization"];
  
   if (!authHeader || !authHeader.startsWith("Bearer ")) {
-    console.log("got here")
     return res
       .status(401)
       .json({ error: "Unauthorized - Bearer token not found" });
@@ -41,6 +41,7 @@ router.put("/updateUser", validateBearerToken, validate.updateUser(), updateUser
 
 router.post("/addCmp", validateBearerToken, validate.addCmp(), addCmp);
 router.put("/updateCmp", validateBearerToken, validate.updateCmp(), updateCmp);
+router.get("/getCmp", validateBearerToken, validate.getCmp(), getCmp);
 
 
 // router.post("/addBlackPage", validate.checkRequestBody , addBlackPage);

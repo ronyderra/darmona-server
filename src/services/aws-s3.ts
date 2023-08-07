@@ -34,7 +34,8 @@ class S3FileManager {
         .promise();
       return JSON.parse(obj.Body.toString());
     } catch (err) {
-      return err;
+      console.log(err.message);
+      return undefined;
     }
   }
 
@@ -73,7 +74,8 @@ class S3FileManager {
         }
       );
     } catch (err) {
-      return err;
+      console.log(err.message)
+      return undefined
     }
   }
 
@@ -81,12 +83,13 @@ class S3FileManager {
     try {
       const params = {
         Bucket: this.Bucket,
-        Key:  `campaigns/${key}.json`,
+        Key: `campaigns/${key}.json`,
         Body: JSON.stringify(data),
       };
       return this.s3.upload(params).promise();
     } catch (err) {
-      return err;
+      console.log(err.message)
+      return undefined
     }
   }
 }
