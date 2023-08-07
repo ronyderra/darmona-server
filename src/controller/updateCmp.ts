@@ -10,7 +10,9 @@ const updateCmp = async (req: Request, res: Response) => {
     return res.status(400).json({ errors: errors.array() });
   }
 
-  let userToUpdate: IUSERDocument | undefined = await USER.getById(req.body._id);
+  let userToUpdate: IUSERDocument | undefined = await USER.getById(
+    req.body._id
+  );
   if (!userToUpdate) {
     return res.status(400).send("user not found");
   }
@@ -21,7 +23,11 @@ const updateCmp = async (req: Request, res: Response) => {
   }
 
   if (req.body.name) {
-    cmp.name = req.body.name;
+    const findIndex = userToUpdate.cmps.findIndex(
+      (item) => item.url == req.body.url
+    );
+    userToUpdate.cmps[findIndex].name = req.body.name;
+    await USER.updateById(req.body._id, userToUpdate);
   }
 
   const url = new URL(cmp.url);
@@ -63,6 +69,9 @@ const updateCmp = async (req: Request, res: Response) => {
   if (req.body.eps) {
     file.eps = req.body.eps;
   }
+
+  const resp = await s3FileManager.updateFile(cmpId, file);
+  return res.status(200).json(resp);
 };
 
 export default updateCmp;
