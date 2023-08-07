@@ -6,6 +6,7 @@ import login from "../controller/login";
 import addCmp from "../controller/addCmp";
 import updateUser from "../controller/updateUser";
 import updateCmp from "../controller/updateCmp";
+import getCmp from "../controller/getCmp";
 import { config } from "dotenv";
 import jwt from 'jsonwebtoken';
 config();
@@ -40,6 +41,7 @@ router.put("/updateUser", validateBearerToken, validate.updateUser(), updateUser
 
 router.post("/addCmp", validateBearerToken, validate.addCmp(), addCmp);
 router.put("/updateCmp", validateBearerToken, validate.updateCmp(), updateCmp);
+router.get("/getCmp", validateBearerToken, validate.getCmp(), getCmp);
 
 
 // router.post("/addBlackPage", validate.checkRequestBody , addBlackPage);

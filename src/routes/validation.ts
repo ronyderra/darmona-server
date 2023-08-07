@@ -20,15 +20,31 @@ export class UserController {
       .isLength({ min: 6 })
       .withMessage("Password must be at least 6 characters long")
       .escape(),
-    imp: body("imp").isObject().withMessage("imp must be an object").notEmpty().withMessage("imp cannot be empty"),
+    imp: body("imp")
+      .isObject()
+      .withMessage("imp must be an object")
+      .notEmpty()
+      .withMessage("imp cannot be empty"),
     ctype: body("ctype").notEmpty().withMessage("must send ctype").escape(),
-    query: body("query").isObject().withMessage("query must be an object").notEmpty().withMessage("query cannot be empty"),
+    query: body("query")
+      .isObject()
+      .withMessage("query must be an object")
+      .notEmpty()
+      .withMessage("query cannot be empty"),
     alias: body("alias").notEmpty().withMessage("must send alias").escape(),
     ip: body("ip").notEmpty().withMessage("must send ip").escape(),
     track: body("track").notEmpty().withMessage("must send track").escape(),
     dc_ep: body("dc_ep").notEmpty().withMessage("must send dc_ep").escape(),
-    query_map: body("query_map").isObject().withMessage("query_map must be an object").notEmpty().withMessage("query_map cannot be empty"),
-    eps: body("eps").isArray().withMessage("eps must be an array").notEmpty().withMessage("eps cannot be empty"),
+    query_map: body("query_map")
+      .isObject()
+      .withMessage("query_map must be an object")
+      .notEmpty()
+      .withMessage("query_map cannot be empty"),
+    eps: body("eps")
+      .isArray()
+      .withMessage("eps must be an array")
+      .notEmpty()
+      .withMessage("eps cannot be empty"),
     url: body("url").notEmpty().withMessage("must send url"),
 
     imp_optional: body("imp")
@@ -97,6 +113,7 @@ export class UserController {
       .isLength({ min: 6 })
       .withMessage("_id must be at least 6 characters long")
       .escape(),
+    cmpId: query("cmpId").notEmpty().withMessage("must send cmpId"),
   };
 
   checkRequestBody(req, res, next) {
@@ -149,5 +166,8 @@ export class UserController {
       this.bodyValidations["query_map_optional"],
       this.bodyValidations["eps_optional"],
     ];
+  }
+  getCmp() {
+    return [this.queryValidations["cmpId"]];
   }
 }
