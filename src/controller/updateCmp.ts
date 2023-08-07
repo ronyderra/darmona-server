@@ -63,8 +63,6 @@ const updateCmp = async (req: Request, res: Response) => {
   if (req.body.eps) {
     file.eps = req.body.eps;
   }
-
-
 };
 
 export default updateCmp;
