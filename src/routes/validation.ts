@@ -20,6 +20,7 @@ export class UserController {
       .isLength({ min: 6 })
       .withMessage("Password must be at least 6 characters long")
       .escape(),
+    data: body("data").isObject().notEmpty().withMessage("data must be passed"),
     imp: body("imp")
       .isObject()
       .withMessage("imp must be an object")
@@ -136,7 +137,7 @@ export class UserController {
     return [this.bodyValidations["username"], this.bodyValidations["password"]];
   }
   updateUser() {
-    return [this.bodyValidations["_id"]];
+    return [this.bodyValidations["_id"], this.bodyValidations["data"]];
   }
   addCmp() {
     return [
