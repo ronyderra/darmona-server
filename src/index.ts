@@ -15,7 +15,7 @@ const MongoUrl: string = process.env.MONGO_URL || "";
 const app = express();
 app.use(express.json());
 app.use(express.urlencoded());
-app.use(cors());
+app.use(cors({ credentials: true, origin: "http://localhost:3000" }));
 app.use("/", router);
 
 export const server = http.createServer(app);
