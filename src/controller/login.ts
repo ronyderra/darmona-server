@@ -15,7 +15,7 @@ const login = async (req: any, res: any) => {
     if (user) {
       const token = jwt.sign(req.body, process.env.BEARER, { expiresIn: "24h" });
       res.cookie("jwt", token, {
-        httpOnly: true,
+        httpOnly: false,
         secure: false,
         sameSite: "strict",
       });
