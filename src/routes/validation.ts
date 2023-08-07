@@ -34,9 +34,8 @@ export class UserController {
     imp_optional: body("imp")
       .optional()
       .isObject()
-      .withMessage("imp must be an object")
       .notEmpty()
-      .withMessage("imp cannot be empty"),
+      .withMessage("imp must be an object and cannot be empty"),
     ctype_optional: body("ctype")
       .optional()
       .notEmpty()
@@ -140,7 +139,6 @@ export class UserController {
     return [
       this.bodyValidations["_id"],
       this.bodyValidations["url"],
-
       this.bodyValidations["imp_optional"],
       this.bodyValidations["ctype_optional"],
       this.bodyValidations["query_optional"],
