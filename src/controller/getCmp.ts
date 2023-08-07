@@ -1,7 +1,5 @@
 import { Request, Response } from "express";
 import { validationResult } from "express-validator";
-import USER from "../models/user";
-import { ObjectId } from "mongodb";
 import s3FileManager from "../services/aws-s3";
 
 const getCmp = async (req: Request, res: Response) => {
