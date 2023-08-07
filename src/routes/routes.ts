@@ -14,7 +14,6 @@ function validateBearerToken(req, res, next) {
   const authHeader = req.headers["authorization"];
  
   if (!authHeader || !authHeader.startsWith("Bearer ")) {
-    console.log("got here")
     return res
       .status(401)
       .json({ error: "Unauthorized - Bearer token not found" });
