@@ -32,11 +32,10 @@ const addCmp = async (req: any, res: Response) => {
     case ctype !== "url":
       errorMsg = "ctype must be url";
       break;
-    case Boolean(ip) !== true:
-      console.log({ ip });
+    case JSON.parse(ip) !== true:
       errorMsg = "ip must be true";
       break;
-    case Boolean(track) !== true:
+    case JSON.parse(track) !== true:
       errorMsg = "track must be true";
       break;
     default:
