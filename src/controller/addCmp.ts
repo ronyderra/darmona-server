@@ -32,10 +32,11 @@ const addCmp = async (req: any, res: Response) => {
     case ctype !== "url":
       errorMsg = "ctype must be url";
       break;
-    case ip !== true:
+    case Boolean(ip) !== true:
+      console.log({ ip });
       errorMsg = "ip must be true";
       break;
-    case track !== true:
+    case Boolean(track) !== true:
       errorMsg = "track must be true";
       break;
     default:
@@ -44,6 +45,7 @@ const addCmp = async (req: any, res: Response) => {
   if (errorMsg) {
     return res.status(404).send(errorMsg);
   }
+  console.log(req.body.eps);
 
   const hid = uuidv4();
   const id = await getId();
@@ -55,8 +57,8 @@ const addCmp = async (req: any, res: Response) => {
       ctype: req.body.ctype,
       query: req.body.query,
       alias: req.body.alias,
-      ip: req.body.ip,
-      track: req.body.track,
+      ip: Boolean(req.body.ip),
+      track: Boolean(req.body.track),
       dc_ep: req.body.dc_ep,
       query_map: req.body.query_map,
       eps: req.body.eps,
