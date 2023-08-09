@@ -45,8 +45,6 @@ const addCmp = async (req: any, res: Response) => {
   if (errorMsg) {
     return res.status(404).send(errorMsg);
   }
-  console.log(req.body.eps);
-
   const hid = uuidv4();
   const id = await getId();
   try {
@@ -75,7 +73,7 @@ const addCmp = async (req: any, res: Response) => {
       return res.status(200).json(updated);
     }
   } catch (error) {
-    console.log(error.message);
+    console.log(error);
     return res.status(404).json(error.message);
   }
 };

@@ -13,7 +13,7 @@ class S3FileManager {
     });
 
     this.s3 = new AWS.S3();
-    this.Bucket = process.env.BUCKET_NAME_PRODUCTION || "";
+    this.Bucket = process.env.BUCKET_NAME_DEV || "";
   }
 
   async getAllFiles() {
@@ -88,7 +88,7 @@ class S3FileManager {
       };
       return this.s3.upload(params).promise();
     } catch (err) {
-      console.log(err.message)
+      console.log("err", err)
       return undefined
     }
   }
