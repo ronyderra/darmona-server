@@ -81,9 +81,9 @@ class Route53Manager {
     try {
       const hostedZone = await this.getHostedZoneByName(domainName);
       const hostedZoneId = hostedZone.Id.split("/").pop();
-
       const params = {
         HostedZoneId: hostedZoneId,
+        MaxItems:"300"
       };
       return await this.route53.listResourceRecordSets(params).promise();
     } catch (err) {
@@ -93,5 +93,4 @@ class Route53Manager {
 }
 
 // Export a single instance of the class
-const route53Manager = new Route53Manager();
-module.exports = route53Manager;
+export const route53Manager = new Route53Manager();

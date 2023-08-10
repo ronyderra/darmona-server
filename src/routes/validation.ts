@@ -115,6 +115,7 @@ export class UserController {
       .withMessage("_id must be at least 6 characters long")
       .escape(),
     cmpId: query("cmpId").notEmpty().withMessage("must send cmpId"),
+    domain: query("domain").notEmpty().withMessage("must send domain"),
   };
 
   checkRequestBody(req, res, next) {
@@ -170,5 +171,8 @@ export class UserController {
   }
   getCmp() {
     return [this.queryValidations["cmpId"]];
+  }
+  getAvailableAliases() {
+    return [this.queryValidations["_id"] ,this.queryValidations["domain"]];
   }
 }

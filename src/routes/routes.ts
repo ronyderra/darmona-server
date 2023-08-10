@@ -4,6 +4,7 @@ import addUser from "../controller/addUser";
 import getUser from "../controller/getUser";
 import login from "../controller/login";
 import addCmp from "../controller/addCmp";
+import getAvailableAliases from "../controller/getAvailableAliases";
 import updateUser from "../controller/updateUser";
 import updateCmp from "../controller/updateCmp";
 import getCmp from "../controller/getCmp";
@@ -43,6 +44,7 @@ router.post("/addCmp", validateBearerToken, validate.addCmp(), addCmp);
 router.put("/updateCmp", validateBearerToken, validate.updateCmp(), updateCmp);
 router.get("/getCmp", validateBearerToken, validate.getCmp(), getCmp);
 
+router.get("/getAvailableAliases", validateBearerToken, validate.getAvailableAliases(), getAvailableAliases);
 
 // router.post("/addBlackPage", validate.checkRequestBody , addBlackPage);
 // router.post("/deleteBlackPage", validate.checkRequestBody , addBlackPage);

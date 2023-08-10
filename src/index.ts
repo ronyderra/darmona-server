@@ -4,6 +4,7 @@ import { config } from "dotenv";
 import http from "http";
 import router from "./routes/routes";
 import mongoose from "mongoose";
+import { route53Manager } from "./services/aws-route53";
 config();
 
 const port = process.env.PORT || 3030;
