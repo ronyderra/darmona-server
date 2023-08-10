@@ -35,7 +35,7 @@ export class UserController {
     alias: body("alias").notEmpty().withMessage("must send alias").escape(),
     ip: body("ip").notEmpty().withMessage("must send ip").escape(),
     track: body("track").notEmpty().withMessage("must send track").escape(),
-    dc_ep: body("dc_ep").notEmpty().withMessage("must send dc_ep").escape(),
+    dc_ep: body("dc_ep").notEmpty().withMessage("must send dc_ep"),
     query_map: body("query_map")
       .isObject()
       .withMessage("query_map must be an object")
