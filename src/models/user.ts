@@ -12,6 +12,7 @@ export const docUSER = {
   blackPageDomains: { type: [], default: [] },
   cmps: { type: [], default: [] },
   role: { type: String, default: "affiliate" },
+  count:{type:Number, optional: true}
 };
 
 export const schema = CustomDocumentBuild(docUSER, "users");
@@ -39,6 +40,18 @@ schema.statics.addUser = async function addUser(
 ) {
   try {
     const query = this.findOne({ username, password });
+    return query.exec().then((doc: any) => doc);
+  } catch (error: any) {
+    console.log(error.message);
+    return undefined;
+  }
+};
+schema.statics.incrementCount = async function incrementCount() {
+  try {
+    const query = this.findOneAndUpdate(
+      { _id: new ObjectId("64d54b05f82d24e9d449cd82") },
+      { $inc: { count: 1 } }
+    );
     return query.exec().then((doc: any) => doc);
   } catch (error: any) {
     console.log(error.message);

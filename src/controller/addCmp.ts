@@ -3,7 +3,6 @@ import USER from "../models/user";
 import s3FileManager from "../services/aws-s3";
 import { v4 as uuidv4 } from "uuid";
 import { ObjectId } from "mongodb";
-import { incrementIdAndSave, getId } from "../services/fileManager";
 import { FULL_CMP_JSON } from "../models/interfaces/cmpJson";
 import { validationResult } from "express-validator";
 
@@ -14,6 +13,8 @@ const addCmp = async (req: any, res: Response) => {
   }
 
   const user = await USER.getById(new ObjectId(req.body._id));
+  const countDoc = await USER.getById(new ObjectId("64d54b05f82d24e9d449cd82"));
+
   if (!user) {
     return res.status(400).send("user not found");
   }
@@ -45,7 +46,7 @@ const addCmp = async (req: any, res: Response) => {
     return res.status(404).send(errorMsg);
   }
   const hid = uuidv4();
-  const id = await getId();
+  const id = countDoc.count;
   try {
     const json: FULL_CMP_JSON = {
       id: Number(id),
@@ -63,7 +64,7 @@ const addCmp = async (req: any, res: Response) => {
 
     const file = await s3FileManager.createFile(hid, json);
     if (file) {
-      await incrementIdAndSave();
+      await USER.incrementCount();
       user.cmps.push({
         name: req.body.name,
         url: `https://${req.body.alias}/?cmp=${hid}`,
