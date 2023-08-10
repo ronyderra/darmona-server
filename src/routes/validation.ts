@@ -82,8 +82,7 @@ export class UserController {
     dc_ep_optional: body("dc_ep")
       .optional()
       .notEmpty()
-      .withMessage("must send dc_ep")
-      .escape(),
+      .withMessage("must send dc_ep"),
     query_map_optional: body("query_map")
       .optional()
       .isObject()
