@@ -8,6 +8,7 @@ import getAvailableAliases from "../controller/getAvailableAliases";
 import updateUser from "../controller/updateUser";
 import updateCmp from "../controller/updateCmp";
 import getCmp from "../controller/getCmp";
+import getSnowData from "../controller/getSnowData";
 import { config } from "dotenv";
 import jwt from 'jsonwebtoken';
 config();
@@ -45,6 +46,8 @@ router.put("/updateCmp", validateBearerToken, validate.updateCmp(), updateCmp);
 router.get("/getCmp", validateBearerToken, validate.getCmp(), getCmp);
 
 router.get("/getAvailableAliases", validateBearerToken, validate.getAvailableAliases(), getAvailableAliases);
+
+router.get("/snowData", validateBearerToken, getSnowData);
 
 // router.post("/addBlackPage", validate.checkRequestBody , addBlackPage);
 // router.post("/deleteBlackPage", validate.checkRequestBody , addBlackPage);
