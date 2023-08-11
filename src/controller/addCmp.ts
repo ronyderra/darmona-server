@@ -57,9 +57,15 @@ const addCmp = async (req: any, res: Response) => {
       alias: req.body.alias,
       ip: Boolean(req.body.ip),
       track: Boolean(req.body.track),
-      dc_ep: req.body.dc_ep,
+      dc_ep: decodeURI(req.body.dc_ep),
       query_map: req.body.query_map,
-      eps: req.body.eps,
+      eps: req.body.eps.map((i) => {
+        return {
+          geo: i.geo,
+          weight: i.weight,
+          ep: decodeURI(i.ep),
+        };
+      }),
     };
 
     const file = await s3FileManager.createFile(hid, json);
