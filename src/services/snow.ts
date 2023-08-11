@@ -27,8 +27,7 @@ class SnowManager {
   async executeSnow(from, to, skip, cmp) {
     try {
       this.snowConnect.execute({
-        sqlText: `select * from fire_sys.public.events as a left join fire_sys.public.skip_reasons_list as b on a.sr = b.id where DATE(ts) between '${from}' and '${to}' and event = 'tracked traffic'  and skip = ${skip} and cmp='${cmp}';`,
-
+        sqlText: `select * from fire_sys.public.events as a left join fire_sys.public.skip_reasons_list as b on a.sr = b.id where DATE(ts) between '${from}' and '${to}' and event = 'tracked traffic' and skip = ${skip} and cmp='${cmp}';`,
         complete: function (err, stmt, rows) {
           if (err) {
             console.error(
