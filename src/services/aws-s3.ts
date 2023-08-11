@@ -13,7 +13,7 @@ class S3FileManager {
     });
 
     this.s3 = new AWS.S3();
-    this.Bucket = process.env.BUCKET_NAME_DEV || "";
+    this.Bucket = process.env.BUCKET_NAME || "";
   }
 
   async getAllFiles() {
