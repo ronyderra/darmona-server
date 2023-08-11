@@ -4,7 +4,7 @@ import { config } from "dotenv";
 import http from "http";
 import router from "./routes/routes";
 import mongoose from "mongoose";
-import { route53Manager } from "./services/aws-route53";
+import snowManager from "./services/snow";
 config();
 
 const port = process.env.PORT || 3030;
@@ -27,6 +27,12 @@ app.use("/", router);
 const server = http.createServer(app);
 server.listen(port, async () => {
   console.log(`Server runs on port ${port}`);
+  const resp = await snowManager.executeSnow(
+    "2023-08-09",
+    "2023-08-09",
+    false,
+    "bac22952-e04f-4c0b-b95e-35b10b5b1564"
+  );
 });
 
 const options: any = { useNewUrlParser: true, useUnifiedTopology: true };
