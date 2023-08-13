@@ -10,6 +10,7 @@ export interface IUSER {
   blackPageDomains: string[];
   cmps: CMP[];
   role: Roles;
+  count?: number;
 }
 
 export enum Roles {
@@ -29,5 +30,6 @@ export interface IUSERModel extends Model<IUSERDocument> {
   createNew(data: IUSER): Promise<IUSERDocument>;
   getById(_id: ObjectId): Promise<IUSERDocument>;
   findUser(username: string, password: string): Promise<IUSERDocument>;
-  updateById(_id: ObjectId, updatedDocument: IUSER): Promise<IUSERDocument>;
+  updateById(_id: ObjectId, updatedDocument: any): Promise<any>;
+  incrementCount(): Promise<any>;
 }

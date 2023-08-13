@@ -35,7 +35,7 @@ export class UserController {
     alias: body("alias").notEmpty().withMessage("must send alias").escape(),
     ip: body("ip").notEmpty().withMessage("must send ip").escape(),
     track: body("track").notEmpty().withMessage("must send track").escape(),
-    dc_ep: body("dc_ep").notEmpty().withMessage("must send dc_ep").escape(),
+    dc_ep: body("dc_ep").notEmpty().withMessage("must send dc_ep"),
     query_map: body("query_map")
       .isObject()
       .withMessage("query_map must be an object")
@@ -82,8 +82,7 @@ export class UserController {
     dc_ep_optional: body("dc_ep")
       .optional()
       .notEmpty()
-      .withMessage("must send dc_ep")
-      .escape(),
+      .withMessage("must send dc_ep"),
     query_map_optional: body("query_map")
       .optional()
       .isObject()
@@ -115,6 +114,7 @@ export class UserController {
       .withMessage("_id must be at least 6 characters long")
       .escape(),
     cmpId: query("cmpId").notEmpty().withMessage("must send cmpId"),
+    domain: query("domain").notEmpty().withMessage("must send domain"),
   };
 
   checkRequestBody(req, res, next) {
@@ -170,5 +170,8 @@ export class UserController {
   }
   getCmp() {
     return [this.queryValidations["cmpId"]];
+  }
+  getAvailableAliases() {
+    return [this.queryValidations["_id"] ,this.queryValidations["domain"]];
   }
 }

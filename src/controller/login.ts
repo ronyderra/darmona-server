@@ -13,11 +13,16 @@ const login = async (req: any, res: any) => {
     const { username, password } = req.body;
     const user = await USER.findUser(username, password);
     if (user) {
-      const token = jwt.sign(req.body, process.env.BEARER, { expiresIn: "24h" });
+      const token = jwt.sign(req.body, process.env.BEARER, {
+        expiresIn: "24h",
+      });
+      const expirationMs = 24 * 60 * 60 * 1000; // 24 hours in milliseconds
+      const expirationDate = new Date(Date.now() + expirationMs);
       res.cookie("jwt", token, {
         httpOnly: false,
         secure: false,
         sameSite: "strict",
+        expires: expirationDate,
       });
       return res.status(200).send(user);
     }

@@ -13,7 +13,7 @@ class S3FileManager {
     });
 
     this.s3 = new AWS.S3();
-    this.Bucket = process.env.BUCKET_NAME_DEV || "";
+    this.Bucket = process.env.BUCKET_NAME || "";
   }
 
   async getAllFiles() {
@@ -94,6 +94,5 @@ class S3FileManager {
   }
 }
 
-// Export a single instance of the class
 const s3FileManager = new S3FileManager();
 export default s3FileManager;

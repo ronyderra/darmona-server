@@ -2,11 +2,14 @@ import express, { Request, Response } from "express";
 import { UserController } from "./validation";
 import addUser from "../controller/addUser";
 import getUser from "../controller/getUser";
+import getWhitePage from "../controller/getWhitePage";
 import login from "../controller/login";
 import addCmp from "../controller/addCmp";
+import getAvailableAliases from "../controller/getAvailableAliases";
 import updateUser from "../controller/updateUser";
 import updateCmp from "../controller/updateCmp";
 import getCmp from "../controller/getCmp";
+import getSnowData from "../controller/getSnowData";
 import { config } from "dotenv";
 import jwt from 'jsonwebtoken';
 config();
@@ -42,6 +45,12 @@ router.put("/updateUser", validateBearerToken, validate.updateUser(), updateUser
 router.post("/addCmp", validateBearerToken, validate.addCmp(), addCmp);
 router.put("/updateCmp", validateBearerToken, validate.updateCmp(), updateCmp);
 router.get("/getCmp", validateBearerToken, validate.getCmp(), getCmp);
+
+router.get("/getAvailableAliases", validateBearerToken, validate.getAvailableAliases(), getAvailableAliases);
+
+router.get("/snowData", validateBearerToken, getSnowData);
+
+router.get("/whitePage", validateBearerToken, getWhitePage);
 
 
 // router.post("/addBlackPage", validate.checkRequestBody , addBlackPage);

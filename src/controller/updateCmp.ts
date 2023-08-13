@@ -61,13 +61,19 @@ const updateCmp = async (req: Request, res: Response) => {
     file.track = req.body.track;
   }
   if (req.body.dc_ep) {
-    file.dc_ep = req.body.dc_ep;
+    file.dc_ep = decodeURI(req.body.dc_ep);
   }
   if (req.body.query_map) {
     file.query_map = req.body.query_map;
   }
   if (req.body.eps) {
-    file.eps = req.body.eps;
+    file.eps = req.body.eps.map((i) => {
+      return {
+        geo: i.geo,
+        weight: i.weight,
+        ep: decodeURI(i.ep),
+      };
+    });
   }
 
   const resp = await s3FileManager.updateFile(cmpId, file);
