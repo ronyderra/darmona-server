@@ -1,15 +1,23 @@
 import { Document, Model } from "mongoose";
+import { ObjectId } from "mongodb";
 
 export interface IWHITEPAGE {
-  domain: string;
-  lang: string;
+  language: string;
   topic: string;
-  url: string;
+  link: string;
+  domain: string;
 }
 
-export interface IWHITEPAGEDocument extends IWHITEPAGE, Document {
-  toJSON(): IWHITEPAGEDocument;
+export interface IWHITE_PAGE_Document extends IWHITEPAGE, Document {
+  toJSON(): IWHITE_PAGE_Document;
 }
-export interface IWHITEPAGEModel extends Model<IWHITEPAGEDocument> {
-  findPage(username: string, password: string): Promise<IWHITEPAGEDocument[]>;
+export interface IWHITEPAGEModel extends Model<IWHITE_PAGE_Document> {
+  createNew(data: IWHITEPAGE): Promise<IWHITE_PAGE_Document>;
+  getById(_id: ObjectId): Promise<IWHITE_PAGE_Document>;
+  findWhitePage(
+    language: string | undefined,
+    topic: string | undefined,
+    domain: string
+  ): Promise<IWHITE_PAGE_Document>;
+  getLangsByDomain(domain: string): Promise<any>;
 }

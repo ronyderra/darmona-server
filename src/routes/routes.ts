@@ -2,6 +2,7 @@ import express, { Request, Response } from "express";
 import { UserController } from "./validation";
 import addUser from "../controller/addUser";
 import getUser from "../controller/getUser";
+import getWhitePage from "../controller/getWhitePage";
 import login from "../controller/login";
 import addCmp from "../controller/addCmp";
 import getAvailableAliases from "../controller/getAvailableAliases";
@@ -48,6 +49,9 @@ router.get("/getCmp", validateBearerToken, validate.getCmp(), getCmp);
 router.get("/getAvailableAliases", validateBearerToken, validate.getAvailableAliases(), getAvailableAliases);
 
 router.get("/snowData", validateBearerToken, getSnowData);
+
+router.get("/whitePage", validateBearerToken, getWhitePage);
+
 
 // router.post("/addBlackPage", validate.checkRequestBody , addBlackPage);
 // router.post("/deleteBlackPage", validate.checkRequestBody , addBlackPage);

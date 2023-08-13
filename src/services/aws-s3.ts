@@ -94,6 +94,5 @@ class S3FileManager {
   }
 }
 
-// Export a single instance of the class
 const s3FileManager = new S3FileManager();
 export default s3FileManager;
