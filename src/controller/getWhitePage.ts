@@ -1,7 +1,5 @@
 import { Request, Response } from "express";
-import { validationResult } from "express-validator";
 import WHITE_PAGES from "../models/whitePage";
-import { ObjectId } from "mongodb";
 
 const getWhitePage = async (req: Request, res: Response) => {
   const { language, topic, domain } = req.query;
