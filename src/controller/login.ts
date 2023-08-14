@@ -19,10 +19,10 @@ const login = async (req: any, res: any) => {
       const expirationMs = 24 * 60 * 60 * 1000; // 24 hours in milliseconds
       const expirationDate = new Date(Date.now() + expirationMs);
       res.cookie("jwt", token, {
-        httpOnly: true, // Set this to true to prevent XSS attacks (unless you have a strong reason to access this cookie via JavaScript on the frontend)
-        secure: true, // Set this to true if your server is running on HTTPS
-        domain: "dev.darmona.org", // Set this to allow cookie to be accessible on your amplify app
-        sameSite: "Lax", // This is required when setting secure: true and for cross-site usage
+        httpOnly: true,
+        secure: true,
+        domain: '.darmona.org',  // Setting the domain to the main domain with a leading dot
+        sameSite: 'none', 
         expires: expirationDate,
       });
       return res.status(200).send(user);
