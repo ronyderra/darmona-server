@@ -182,7 +182,6 @@ export class UserController {
     return [
       this.queryValidations["from"],
       this.queryValidations["to"],
-      this.queryValidations["skip"],
       this.queryValidations["cmp"],
     ];
   }

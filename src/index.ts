@@ -27,12 +27,6 @@ app.use("/", router);
 const server = http.createServer(app);
 server.listen(port, async () => {
   console.log(`Server runs on port ${port}`);
-  const resp = await snowManager.executeSnow(
-    "2023-08-09",
-    "2023-08-09",
-    false,
-    "bac22952-e04f-4c0b-b95e-35b10b5b1564"
-  );
 });
 
 const options: any = { useNewUrlParser: true, useUnifiedTopology: true };
