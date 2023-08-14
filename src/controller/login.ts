@@ -19,11 +19,10 @@ const login = async (req: any, res: any) => {
       const expirationMs = 24 * 60 * 60 * 1000; // 24 hours in milliseconds
       const expirationDate = new Date(Date.now() + expirationMs);
       res.cookie("jwt", token, {
-        httpOnly: false,
-        secure: false,
-        sameSite: "none",
+        sameSite : "none",
+        secure: true,
         domain: "main.d3px52zhihmoye.amplifyapp.com",
-        expires: expirationDate,
+        httpOnly: true
       });
       return res.status(200).send(user);
     }
