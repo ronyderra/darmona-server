@@ -24,11 +24,13 @@ class SnowManager {
     });
   }
 
-  async executeSnow(from, to, skip, cmp) {
+  async executeSnow(from, to, cmp) {
     try {
       return new Promise((resolve, reject) => {
         this.snowConnect.execute({
-          sqlText: `select * from fire_sys.public.events as a left join fire_sys.public.skip_reasons_list as b on a.sr = b.id where DATE(ts) between '${from}' and '${to}' and event = 'tracked traffic' and skip = ${skip} and cmp='${cmp}';`,
+          sqlText: `SELECT skip, COUNT(*) AS count FROM fire_sys.public.events as a left join fire_sys.public.skip_reasons_list as b on a.sr = b.id WHERE 
+       DATE(ts) between '${from}' and '${to}' and event = 'tracked traffic' and cmp='${cmp}' and skip IN (TRUE, FALSE)
+      GROUP BY skip;`,
           complete: function (err, stmt, rows) {
             if (err) {
               console.error(
@@ -37,7 +39,7 @@ class SnowManager {
               );
               reject(err);
             } else {
-              resolve(rows.length);
+              resolve(rows);
             }
           },
         });
