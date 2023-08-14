@@ -22,6 +22,7 @@ const login = async (req: any, res: any) => {
         httpOnly: false,
         secure: false,
         sameSite: "none",
+        domain: "darmona-aff3d37b387b.herokuapp.com",
         expires: expirationDate,
       });
       return res.status(200).send(user);
