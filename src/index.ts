@@ -4,7 +4,6 @@ import { config } from "dotenv";
 import http from "http";
 import router from "./routes/routes";
 import mongoose from "mongoose";
-import snowManager from "./services/snow";
 config();
 
 const port = process.env.PORT || 3030;
