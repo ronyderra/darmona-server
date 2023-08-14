@@ -17,7 +17,7 @@ app.use(
     credentials: true,
     origin: [
       "http://localhost:3000",
-      "https://master.d7vuyvgacqzf1.amplifyapp.com",
+      "https://main.d3px52zhihmoye.amplifyapp.com/",
     ],
   })
 );
