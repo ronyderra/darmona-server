@@ -23,7 +23,7 @@ function validateBearerToken(req, res, next) {
       .json({ error: "Unauthorized - Bearer token not found" });
   }
   const token = authHeader.split(" ")[1];
-  jwt.verify(token, "password", (err, decodedToken) => {
+  jwt.verify(token, process.env.BEARER, (err, decodedToken) => {
     if (err) {
       return res
         .status(401)
