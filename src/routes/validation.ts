@@ -115,6 +115,10 @@ export class UserController {
       .escape(),
     cmpId: query("cmpId").notEmpty().withMessage("must send cmpId"),
     domain: query("domain").notEmpty().withMessage("must send domain"),
+    from: query("from").notEmpty().withMessage("must send from"),
+    to: query("to").notEmpty().withMessage("must send to"),
+    skip: query("skip").notEmpty().withMessage("must send skip"),
+    cmp: query("cmp").notEmpty().withMessage("must send cmp"),
   };
 
   checkRequestBody(req, res, next) {
@@ -172,6 +176,14 @@ export class UserController {
     return [this.queryValidations["cmpId"]];
   }
   getAvailableAliases() {
-    return [this.queryValidations["_id"] ,this.queryValidations["domain"]];
+    return [this.queryValidations["_id"], this.queryValidations["domain"]];
+  }
+  getSnowData() {
+    return [
+      this.queryValidations["from"],
+      this.queryValidations["to"],
+      this.queryValidations["skip"],
+      this.queryValidations["cmp"],
+    ];
   }
 }

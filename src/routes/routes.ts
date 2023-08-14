@@ -48,7 +48,7 @@ router.get("/getCmp", validateBearerToken, validate.getCmp(), getCmp);
 
 router.get("/getAvailableAliases", validateBearerToken, validate.getAvailableAliases(), getAvailableAliases);
 
-router.get("/snowData", validateBearerToken, getSnowData);
+router.get("/snowData", validateBearerToken,validate.getSnowData(), getSnowData);
 
 router.get("/whitePage", validateBearerToken, getWhitePage);
 
