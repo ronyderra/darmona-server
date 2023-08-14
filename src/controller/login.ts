@@ -19,7 +19,7 @@ const login = async (req: any, res: any) => {
       const expirationMs = 24 * 60 * 60 * 1000; // 24 hours in milliseconds
       const expirationDate = new Date(Date.now() + expirationMs);
       res.cookie("jwt", token, {
-        httpOnly: true,
+        httpOnly: false,
         secure: true,
         domain: '.darmona.org',  // Setting the domain to the main domain with a leading dot
         sameSite: 'none', 
