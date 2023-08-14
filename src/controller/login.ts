@@ -21,7 +21,7 @@ const login = async (req: any, res: any) => {
       res.cookie("jwt", token, {
         httpOnly: false,
         secure: false,
-        sameSite: "strict",
+        sameSite: "none",
         expires: expirationDate,
       });
       return res.status(200).send(user);
