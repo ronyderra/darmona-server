@@ -22,7 +22,7 @@ const login = async (req: any, res: any) => {
         httpOnly: true,   // Set this to true to prevent XSS attacks (unless you have a strong reason to access this cookie via JavaScript on the frontend)
         secure: true,     // Set this to true if your server is running on HTTPS
         domain: '.d3px52zhihmoye.amplifyapp.com', // Set this to allow cookie to be accessible on your amplify app
-        sameSite: 'none', // This is required when setting secure: true and for cross-site usage
+        sameSite: 'Lax', // This is required when setting secure: true and for cross-site usage
         expires: expirationDate,
       });
       return res.status(200).send(user);
