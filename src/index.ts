@@ -19,8 +19,8 @@ app.use(
       "http://localhost:3000",
       "https://main.d3px52zhihmoye.amplifyapp.com/",
       "https://main.d3px52zhihmoye.amplifyapp.com",
-      "dev.darmona.org",
-      "dev.darmona.org/"
+      "https://dev.darmona.org",
+      "https://dev.darmona.org/"
     ],
   })
 );
