@@ -21,7 +21,7 @@ const login = async (req: any, res: any) => {
       res.cookie("jwt", token, {
         httpOnly: false,
         secure: true,
-        domain: '.darmona.org',  // Setting the domain to the main domain with a leading dot
+        // domain: '.darmona.org',  
         sameSite: 'none', 
         expires: expirationDate,
       });
