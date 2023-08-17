@@ -1,13 +1,11 @@
 import { Document, Model } from "mongoose";
 
 export interface IBLACKPAGE {
-  domain: string;
   lang: string;
   geo: string;
   template: string;
   celeb: string;
   offerPage: string;
-
   url: string;
 }
 
