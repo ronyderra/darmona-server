@@ -119,6 +119,7 @@ export class UserController {
     to: query("to").notEmpty().withMessage("must send to"),
     skip: query("skip").notEmpty().withMessage("must send skip"),
     cmp: query("cmp").notEmpty().withMessage("must send cmp"),
+    path: query("path").exists().withMessage("must send path"),
   };
 
   checkRequestBody(req, res, next) {
@@ -184,5 +185,8 @@ export class UserController {
       this.queryValidations["to"],
       this.queryValidations["cmp"],
     ];
+  }
+  getBlackPages() {
+    return [this.queryValidations["path"]];
   }
 }
