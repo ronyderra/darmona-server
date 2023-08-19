@@ -13,14 +13,14 @@ class PlFileManager {
     });
 
     this.s3 = new AWS.S3();
-    this.Bucket = process.env.PRELANDERS_MAIN_BUCKET_NAME || "";
+    this.Bucket = process.env.DEPARTURE_PL_BUCKET || "";
   }
 
-  async getAllFiles(path) {
+  async getAllFiles(path, bucket = this.Bucket) {
     try {
       return await this.s3
         .listObjectsV2({
-          Bucket: this.Bucket,
+          Bucket: bucket,
           Prefix: path,
           Delimiter: "/",
         })

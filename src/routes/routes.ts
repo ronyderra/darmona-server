@@ -3,7 +3,7 @@ import { UserController } from "./validation";
 import addUser from "../controller/addUser";
 import getUser from "../controller/getUser";
 import getWhitePage from "../controller/getWhitePage";
-import getBlackPages from "../controller/getBlackPages";
+import { getBlackPages, getCharacters } from "../controller/getBlackPages";
 import login from "../controller/login";
 import addCmp from "../controller/addCmp";
 import getAvailableAliases from "../controller/getAvailableAliases";
@@ -76,6 +76,12 @@ router.get(
   validateBearerToken,
   validate.getBlackPages(),
   getBlackPages
+);
+router.get(
+  "/getCharacters",
+  validateBearerToken,
+  validate.getBlackPages(),
+  getCharacters
 );
 
 // router.post("/addWhitePage", validate.checkRequestBody , addWhitePage);
