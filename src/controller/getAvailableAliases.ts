@@ -7,7 +7,11 @@ import { ObjectId } from "mongodb";
 function filterItemsNotInArray(a, b) {
   const result = [];
   for (const aItem of a) {
-    const existsInB = b.some((bItem) => bItem.includes(aItem));
+    const existsInB = b.some((bItem) => {
+      const url = new URL(bItem);
+      const domainWithSubdomain = url.hostname;
+      return domainWithSubdomain === aItem;
+    });
     if (!existsInB) {
       result.push(aItem);
     }
