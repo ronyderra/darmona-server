@@ -13,6 +13,11 @@ import getCmp from "../controller/getCmp";
 import getSnowData from "../controller/getSnowData";
 import { config } from "dotenv";
 import jwt from "jsonwebtoken";
+import {
+  getBlackPagesV2,
+  getGeos,
+  getCharactersV2,
+} from "../controller/getBlackPagesV2";
 config();
 
 function validateBearerToken(req, res, next) {
@@ -83,6 +88,10 @@ router.get(
   validate.getBlackPages(),
   getCharacters
 );
+
+router.get("/getBlackPagesV2", getBlackPagesV2);
+router.get("/getGeos", getGeos);
+router.get("/getCharactersV2", getCharactersV2);
 
 // router.post("/addWhitePage", validate.checkRequestBody , addWhitePage);
 // router.post("/deleteWhitePage", validate.checkRequestBody , addWhitePage);

@@ -1,17 +1,25 @@
 import { Document, Model } from "mongoose";
 
 export interface IBLACKPAGE {
-  lang: string;
+  version: string;
   geo: string;
+  lang: string;
   template: string;
   celeb: string;
   offerPage: string;
-  url: string;
+  stagingLink: string;
+  productionLink: string;
 }
 
-export interface IBLACKPAGDocument extends IBLACKPAGE, Document {
-  toJSON(): IBLACKPAGDocument;
+export interface IBLACKPAGEDocument extends IBLACKPAGE, Document {
+  toJSON(): IBLACKPAGEDocument;
 }
-export interface IBLACKPAGEModel extends Model<IBLACKPAGDocument> {
-  findUser(username: string, password: string): Promise<IBLACKPAGDocument[]>;
+export interface IBLACKPAGEModel extends Model<IBLACKPAGEDocument> {
+  getBlackPage(
+    version: string,
+    geo: string,
+    celeb: string | undefined
+  ): Promise<IBLACKPAGEDocument[]>;
+  getGeos(version: string): Promise<IBLACKPAGEDocument[]>;
+  getCharactersV2(version: string, geo: string): Promise<IBLACKPAGEDocument[]>;
 }
