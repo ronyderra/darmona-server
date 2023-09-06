@@ -69,6 +69,7 @@ const addCmp = async (req: any, res: Response) => {
     };
 
     const file = await s3FileManager.createFile(hid, json);
+    console.log("CREATED NEW JSON", file);
     if (file) {
       await USER.incrementCount();
       user.cmps.push({
