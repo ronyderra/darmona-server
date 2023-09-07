@@ -49,7 +49,7 @@ schema.statics.addUser = async function addUser(
 schema.statics.incrementCount = async function incrementCount() {
   try {
     const query = this.findOneAndUpdate(
-      { _id: new ObjectId("64d54b05f82d24e9d449cd82") },
+      { _id: new ObjectId("64fa03060a4670386240f4ad") },
       { $inc: { count: 1 } }
     );
     return query.exec().then((doc: any) => doc);
