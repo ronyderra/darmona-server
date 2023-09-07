@@ -4,6 +4,7 @@ import { config } from "dotenv";
 import http from "http";
 import router from "./routes/routes";
 import mongoose from "mongoose";
+import bodyParser = require("body-parser");
 config();
 
 const port = process.env.PORT || 3030;
@@ -12,6 +13,7 @@ const MongoUrl: string = process.env.MONGO_URL || "";
 const app = express();
 app.use(express.json());
 app.use(express.urlencoded());
+app.use(bodyParser.json({limit: '50mb'}));  // Increase to 50MB
 app.use(
   cors({
     credentials: true,

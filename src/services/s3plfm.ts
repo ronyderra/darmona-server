@@ -98,6 +98,27 @@ class PlFileManager {
       return undefined;
     }
   }
+  async uploadImage(key, base64Image, bucketName) {
+    try {
+      const match = base64Image.match(/^data:(.+);base64,(.+)$/);
+      if (!match) {
+        throw new Error('Invalid base64 string');
+      }
+      const data = Buffer.from(match[2], 'base64');
+      const contentType = match[1];
+      const params = {
+        Bucket: bucketName,
+        Key: key, // File name you want to save as in S3
+        Body: data,
+        ContentType: contentType,
+        ACL: 'public-read' 
+      };
+      return this.s3.upload(params).promise();
+    } catch (err) {
+      console.log("err", err);
+      return undefined;
+    }
+  }
 }
 
 const s3plfm = new PlFileManager();

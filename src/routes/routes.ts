@@ -18,6 +18,7 @@ import {
   getGeos,
   getCharactersV2,
 } from "../controller/getBlackPagesV2";
+import { uploadImg } from "../controller/uploadImg";
 config();
 
 function validateBearerToken(req, res, next) {
@@ -82,6 +83,7 @@ router.get(
   validate.getBlackPages(),
   getBlackPages
 );
+router.post("/uploadImg", validateBearerToken, uploadImg);
 router.get(
   "/getCharacters",
   validateBearerToken,
