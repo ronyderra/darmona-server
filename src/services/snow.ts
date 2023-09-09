@@ -48,7 +48,7 @@ class SnowManager {
       throw err;
     }
   }
-  async getRows(from, to, cmp) {
+  async getRows(from, to, cmp):Promise<[]> {
     try {
       return new Promise((resolve, reject) => {
         this.snowConnect.execute({

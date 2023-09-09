@@ -23,9 +23,12 @@ export const getRows = async (req: Request, res: Response) => {
   const { from, to, cmp } = req.query;
 
   const resp = await snowManager.getRows(from, to, cmp);
+  if (resp.length > 100) {
+    res.status(200).json({ resp: resp.slice(0, 100) });
+    console.log(resp.slice(0, 100));
+    return;
+  }
   console.log(resp);
 
   return res.status(200).json({ resp });
 };
-
-
