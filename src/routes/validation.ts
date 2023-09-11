@@ -119,6 +119,7 @@ export class UserController {
     to: query("to").notEmpty().withMessage("must send to"),
     skip: query("skip").notEmpty().withMessage("must send skip"),
     cmp: query("cmp").notEmpty().withMessage("must send cmp"),
+    by: query("by").notEmpty().withMessage("must send by"),
     path: query("path").exists().withMessage("must send path"),
   };
 
@@ -184,6 +185,13 @@ export class UserController {
       this.queryValidations["from"],
       this.queryValidations["to"],
       this.queryValidations["cmp"],
+    ];
+  }
+  countByDateAndParam() {
+    return [
+      this.queryValidations["from"],
+      this.queryValidations["to"],
+      this.queryValidations["by"],
     ];
   }
   getBlackPages() {

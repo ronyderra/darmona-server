@@ -10,7 +10,7 @@ import getAvailableAliases from "../controller/getAvailableAliases";
 import updateUser from "../controller/updateUser";
 import updateCmp from "../controller/updateCmp";
 import getCmp from "../controller/getCmp";
-import {getSnowData , getRows} from "../controller/getSnowData";
+import {getSnowData , getRows ,countByDateAndParam} from "../controller/getSnowData";
 import { config } from "dotenv";
 import jwt from "jsonwebtoken";
 import {
@@ -70,6 +70,12 @@ router.get(
   validateBearerToken,
   validate.getSnowData(),
   getSnowData
+);
+router.get(
+  "/countByDateAndParam",
+  validateBearerToken,
+  validate.countByDateAndParam(),
+  countByDateAndParam
 );
 router.get(
   "/getrows",

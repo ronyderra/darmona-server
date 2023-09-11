@@ -32,3 +32,13 @@ export const getRows = async (req: Request, res: Response) => {
 
   return res.status(200).json({ resp });
 };
+export const countByDateAndParam = async (req: Request, res: Response) => {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return res.status(400).json({ errors: errors.array() });
+  }
+  const { from, to, by } = req.query;
+  const resp = await snowManager.countByDateAndParam(from, to, by);
+  console.log(resp);
+  return res.status(200).json({ resp });
+};

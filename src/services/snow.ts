@@ -48,11 +48,53 @@ class SnowManager {
       throw err;
     }
   }
-  async getRows(from, to, cmp):Promise<[]> {
+  async getRows(from, to, cmp): Promise<[]> {
     try {
       return new Promise((resolve, reject) => {
         this.snowConnect.execute({
           sqlText: `SELECT * FROM fire_sys.public.events as a left join fire_sys.public.skip_reasons_list as b on a.sr = b.id where DATE(ts) between '${from}' and '${to}' and event = 'tracked traffic' and cmp='${cmp}' ;`,
+          complete: function (err, stmt, rows) {
+            if (err) {
+              console.error(
+                "Failed to execute statement due to the following error: " +
+                  err.message
+              );
+              reject(err);
+            } else {
+              resolve(rows);
+            }
+          },
+        });
+      });
+    } catch (err) {
+      throw err;
+    }
+  }
+  async countByDateAndParam(from, to, by): Promise<[]> {
+    try {
+      return new Promise((resolve, reject) => {
+        console.log(`SELECT  '${by}',
+        SUM(CASE WHEN skip = FALSE THEN 1 ELSE 0 END) AS passed,
+        SUM(CASE WHEN skip = TRUE THEN 1 ELSE 0 END) AS not_passed,
+        SUM(CASE WHEN skip = TRUE AND reason = 'first impressions skip' THEN 1 ELSE 0 END) AS impressions_skip,
+        SUM(CASE WHEN skip = TRUE AND reason = 'query rules skip' THEN 1 ELSE 0 END) AS query_rules,
+        SUM(CASE WHEN skip = TRUE AND reason = 'ip blocked' THEN 1 ELSE 0 END) AS ip_blocked,
+        SUM(CASE WHEN skip = TRUE AND reason = 'no endpoint to deliver' THEN 1 ELSE 0 END) AS no_endpoint_to_deliver
+       FROM fire_sys.public.events as a left join fire_sys.public.skip_reasons_list as b on a.sr = b.id 
+       WHERE DATE(ts) between '${from}' and '${to}' and event = 'tracked traffic'
+       GROUP BY '${by}';`);
+        
+        this.snowConnect.execute({
+          sqlText: `SELECT  ${by},
+          SUM(CASE WHEN skip = FALSE THEN 1 ELSE 0 END) AS passed,
+          SUM(CASE WHEN skip = TRUE THEN 1 ELSE 0 END) AS not_passed,
+          SUM(CASE WHEN skip = TRUE AND reason = 'first impressions skip' THEN 1 ELSE 0 END) AS impressions_skip,
+          SUM(CASE WHEN skip = TRUE AND reason = 'query rules skip' THEN 1 ELSE 0 END) AS query_rules,
+          SUM(CASE WHEN skip = TRUE AND reason = 'ip blocked' THEN 1 ELSE 0 END) AS ip_blocked,
+          SUM(CASE WHEN skip = TRUE AND reason = 'no endpoint to deliver' THEN 1 ELSE 0 END) AS no_endpoint_to_deliver
+         FROM fire_sys.public.events as a left join fire_sys.public.skip_reasons_list as b on a.sr = b.id 
+         WHERE DATE(ts) between '${from}' and '${to}' and event = 'tracked traffic'
+         GROUP BY ${by};`,
           complete: function (err, stmt, rows) {
             if (err) {
               console.error(
