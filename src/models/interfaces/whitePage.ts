@@ -6,6 +6,7 @@ export interface IWHITEPAGE {
   topic: string;
   link: string;
   domain: string;
+  linkType:string
 }
 
 export interface IWHITE_PAGE_Document extends IWHITEPAGE, Document {

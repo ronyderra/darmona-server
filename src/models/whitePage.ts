@@ -12,6 +12,7 @@ export const docWHITE_PAGE = {
   topic: { type: String },
   link: { type: String },
   domain: { type: String },
+  linkType: { type: String },
 };
 
 export const schema = CustomDocumentBuild(docWHITE_PAGE, "white_pages");
@@ -22,7 +23,7 @@ schema.statics.getLangsByDomain = async function getLangsByDomain(
   try {
     const query = this.find(
       { domain },
-      { language: 1, topic: 1, link: 1, _id: 0 }
+      { language: 1, topic: 1, link: 1, linkType: 1, _id: 0 }
     );
     return query.exec().then((doc: any) => doc);
   } catch (error: any) {
