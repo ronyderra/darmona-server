@@ -10,7 +10,11 @@ import getAvailableAliases from "../controller/getAvailableAliases";
 import updateUser from "../controller/updateUser";
 import updateCmp from "../controller/updateCmp";
 import getCmp from "../controller/getCmp";
-import {getSnowData , getRows ,countByDateAndParam} from "../controller/getSnowData";
+import {
+  getSnowData,
+  getRows,
+  countByDateAndParam,
+} from "../controller/getSnowData";
 import { config } from "dotenv";
 import jwt from "jsonwebtoken";
 import {
@@ -19,6 +23,7 @@ import {
   getCharactersV2,
 } from "../controller/getBlackPagesV2";
 import { uploadImg } from "../controller/uploadImg";
+import { bycmpId } from "../controller/cmps/bycmpId";
 config();
 
 function validateBearerToken(req, res, next) {
@@ -77,12 +82,7 @@ router.get(
   validate.countByDateAndParam(),
   countByDateAndParam
 );
-router.get(
-  "/getrows",
-  validateBearerToken,
-  validate.getSnowData(),
-  getRows
-);
+router.get("/getrows", validateBearerToken, validate.getSnowData(), getRows);
 
 router.get("/whitePage", validateBearerToken, getWhitePage);
 
@@ -106,6 +106,8 @@ router.get(
 router.get("/getBlackPagesV2", getBlackPagesV2);
 router.get("/getGeos", getGeos);
 router.get("/getCharactersV2", getCharactersV2);
+
+router.get("/bycmpId", bycmpId);
 
 // router.post("/addWhitePage", validate.checkRequestBody , addWhitePage);
 // router.post("/deleteWhitePage", validate.checkRequestBody , addWhitePage);

@@ -5,6 +5,7 @@ import { v4 as uuidv4 } from "uuid";
 import { ObjectId } from "mongodb";
 import { FULL_CMP_JSON } from "../models/interfaces/cmpJson";
 import { validationResult } from "express-validator";
+import CMP, { ICMP } from "../models/cmps";
 
 const addCmp = async (req: any, res: Response) => {
   const errors = validationResult(req);
@@ -67,6 +68,14 @@ const addCmp = async (req: any, res: Response) => {
         };
       }),
     };
+   
+    const cmpDoc: ICMP = {
+      userId: user?._id,
+      user: user?.username,
+      cmpName: req.body.name,
+      cmpUrl: `https://${req.body.alias}/?cmp=${hid}`,
+      cmpId: hid,
+    };
 
     const file = await s3FileManager.createFile(hid, json);
     console.log("CREATED NEW JSON", file);
@@ -77,6 +86,7 @@ const addCmp = async (req: any, res: Response) => {
         url: `https://${req.body.alias}/?cmp=${hid}`,
       });
       const updated = await USER.updateById(req.body._id, user);
+      await CMP.createNew(cmpDoc)
       return res.status(200).json(updated);
     }
   } catch (error) {
