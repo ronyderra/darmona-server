@@ -37,8 +37,8 @@ export const countByDateAndParam = async (req: Request, res: Response) => {
   if (!errors.isEmpty()) {
     return res.status(400).json({ errors: errors.array() });
   }
-  const { from, to, by } = req.query;
-  const resp = await snowManager.countByDateAndParam(from, to, by);
-  console.log(resp);
+  const { from, to, by, sort } = req.query;
+  const resp = await snowManager.countByDateAndParam(from, to, by, sort);
+  // console.log(resp);
   return res.status(200).json({ resp });
 };
