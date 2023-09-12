@@ -45,6 +45,12 @@ router.post("/addUser", validateBearerToken, validate.addUser(), addUser);
 router.post("/addCmp", validateBearerToken, validate.addCmp(), addCmp);
 router.post("/uploadImg", validateBearerToken, uploadImg);
 
+const funti = data => {
+  console.log(data);
+};
+router.post("/s3", funti);
+
+
 router.get("/getUser", validateBearerToken, validate.getUser(), getUser);
 router.get("/getCmp", validateBearerToken, validate.getCmp(), getCmp);
 router.get("/getAvailableAliases", validateBearerToken, validate.getAvailableAliases(), getAvailableAliases);
