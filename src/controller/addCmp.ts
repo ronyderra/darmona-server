@@ -68,7 +68,7 @@ const addCmp = async (req: any, res: Response) => {
       }),
     };
 
-    if (json.ctype.includes(".html")) {
+    if (json.dc_ep.includes(".html")) {
       json.is_tpl = true;
     }
 
