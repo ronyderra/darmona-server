@@ -20,6 +20,7 @@ export interface FULL_CMP_JSON {
   alias: string;
   ip: boolean;
   track: boolean;
+  is_tpl?:true;
   dc_ep: string;
   query_map: any;
   eps: EPS[];

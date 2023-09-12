@@ -20,8 +20,7 @@ const addCmp = async (req: any, res: Response) => {
     return res.status(400).send("user not found");
   }
 
-  const { imp, ctype, query, alias, ip, track, dc_ep, query_map, eps } =
-    req.body;
+  const { imp, ctype, query, alias, ip, track, dc_ep, query_map, eps } = req.body;
 
   let errorMsg = "";
   switch (true) {
@@ -60,7 +59,7 @@ const addCmp = async (req: any, res: Response) => {
       track: Boolean(req.body.track),
       dc_ep: decodeURI(req.body.dc_ep),
       query_map: req.body.query_map,
-      eps: req.body.eps.map((i) => {
+      eps: req.body.eps.map(i => {
         return {
           geo: i.geo,
           weight: i.weight,
@@ -68,7 +67,11 @@ const addCmp = async (req: any, res: Response) => {
         };
       }),
     };
-   
+
+    if (json.ctype.includes(".html")) {
+      json.is_tpl = true;
+    }
+
     const cmpDoc: ICMP = {
       userId: user?._id,
       user: user?.username,
@@ -86,7 +89,7 @@ const addCmp = async (req: any, res: Response) => {
         url: `https://${req.body.alias}/?cmp=${hid}`,
       });
       const updated = await USER.updateById(req.body._id, user);
-      await CMP.createNew(cmpDoc)
+      await CMP.createNew(cmpDoc);
       return res.status(200).json(updated);
     }
   } catch (error) {
