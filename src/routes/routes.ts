@@ -49,6 +49,7 @@ const funti = data => {
   console.log(data);
 };
 router.post("/s3", funti);
+router.get("/s3", funti);
 
 
 router.get("/getUser", validateBearerToken, validate.getUser(), getUser);
