@@ -46,7 +46,7 @@ router.post("/addCmp", validateBearerToken, validate.addCmp(), addCmp);
 router.post("/uploadImg", validateBearerToken, uploadImg);
 
 const funti = () => {
-  console.log("got here");
+  console.log("got here!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
 };
 router.post("/s3", funti);
 router.get("/s3", funti);
