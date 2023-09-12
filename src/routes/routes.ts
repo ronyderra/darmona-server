@@ -2,7 +2,7 @@ import express, { Request, Response } from "express";
 import { UserController } from "./validation";
 import addUser from "../controller/addUser";
 import getUser from "../controller/getUser";
-import getWhitePage from "../controller/getWhitePage";
+import {getWhitePage, getWhitePageHtmlType} from "../controller/getWhitePage";
 import { getBlackPages, getCharacters } from "../controller/getBlackPages";
 import login from "../controller/login";
 import addCmp from "../controller/addCmp";
@@ -85,6 +85,7 @@ router.get(
 router.get("/getrows", validateBearerToken, validate.getSnowData(), getRows);
 
 router.get("/whitePage", validateBearerToken, getWhitePage);
+router.get("/getWhitePageHtmlType", validateBearerToken, getWhitePageHtmlType);
 
 // router.post("/addBlackPage", validate.checkRequestBody , addBlackPage);
 // router.post("/deleteBlackPage", validate.checkRequestBody , addBlackPage);

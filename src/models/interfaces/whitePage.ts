@@ -6,7 +6,7 @@ export interface IWHITEPAGE {
   topic: string;
   link: string;
   domain: string;
-  linkType:string
+  linkType: string;
 }
 
 export interface IWHITE_PAGE_Document extends IWHITEPAGE, Document {
@@ -21,4 +21,5 @@ export interface IWHITEPAGEModel extends Model<IWHITE_PAGE_Document> {
     domain: string
   ): Promise<IWHITE_PAGE_Document>;
   getLangsByDomain(domain: string): Promise<any>;
+  getWhitePageHtmlType(): Promise<IWHITE_PAGE_Document[]>;
 }

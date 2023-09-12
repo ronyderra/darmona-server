@@ -58,6 +58,15 @@ schema.statics.findWhitePage = async function findWhitePage(
     return undefined;
   }
 };
+schema.statics.getWhitePageHtmlType = async function getWhitePageHtmlType() {
+  try {
+    const query = this.find({ linkType: "html" }).sort({ language: 1 });
+    return query.exec().then((doc: any) => doc);
+  } catch (error: any) {
+    console.log(error.message);
+    return undefined;
+  }
+};
 
 const WHITE_PAGES: IWHITEPAGEModel = model<
   IWHITE_PAGE_Document,
