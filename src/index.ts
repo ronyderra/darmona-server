@@ -13,17 +13,11 @@ const MongoUrl: string = process.env.MONGO_URL || "";
 const app = express();
 app.use(express.json());
 app.use(express.urlencoded());
-app.use(bodyParser.json({limit: '50mb'}));  // Increase to 50MB
+app.use(bodyParser.json({ limit: "50mb" })); // Increase to 50MB
 app.use(
   cors({
     credentials: true,
-    origin: [
-      "http://localhost:3000",
-      "https://main.d3px52zhihmoye.amplifyapp.com/",
-      "https://main.d3px52zhihmoye.amplifyapp.com",
-      "https://dev.darmona.org",
-      "https://dev.darmona.org/"
-    ],
+    origin: ["http://localhost:3000", "https://main.d3px52zhihmoye.amplifyapp.com/", "https://main.d3px52zhihmoye.amplifyapp.com", "https://dev.darmona.org", "https://dev.darmona.org/"],
   })
 );
 app.use("/", router);
@@ -37,7 +31,7 @@ const options: any = { useNewUrlParser: true, useUnifiedTopology: true };
 mongoose.set("strictQuery", true);
 mongoose.connect(MongoUrl, options);
 const connection = mongoose.connection;
-connection.on("error", (err) => console.error("connection error: ", err));
+connection.on("error", err => console.error("connection error: ", err));
 connection.once("open", () => {
   console.log("connected to: ", connection.name);
 });
