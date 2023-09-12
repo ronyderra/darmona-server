@@ -37,37 +37,27 @@ function validateBearerToken(req, res, next) {
 const router = express.Router();
 const validate = new UserController();
 
-router.post("/login", validate.login(), login);
-router.get("/getUser", validateBearerToken, validate.getUser(), getUser);
-router.post("/addUser", validateBearerToken, validate.addUser(), addUser);
 router.put("/updateUser", validateBearerToken, validate.updateUser(), updateUser);
-
-router.post("/addCmp", validateBearerToken, validate.addCmp(), addCmp);
 router.put("/updateCmp", validateBearerToken, validate.updateCmp(), updateCmp);
+
+router.post("/login", validate.login(), login);
+router.post("/addUser", validateBearerToken, validate.addUser(), addUser);
+router.post("/addCmp", validateBearerToken, validate.addCmp(), addCmp);
+router.post("/uploadImg", validateBearerToken, uploadImg);
+
+router.get("/getUser", validateBearerToken, validate.getUser(), getUser);
 router.get("/getCmp", validateBearerToken, validate.getCmp(), getCmp);
-
 router.get("/getAvailableAliases", validateBearerToken, validate.getAvailableAliases(), getAvailableAliases);
-
 router.get("/snowData", validateBearerToken, validate.getSnowData(), getSnowData);
 router.get("/countByDateAndParam", validateBearerToken, validate.countByDateAndParam(), countByDateAndParam);
 router.get("/getrows", validateBearerToken, validate.getSnowData(), getRows);
-
 router.get("/whitePage", validateBearerToken, getWhitePage);
 router.get("/getWhitePageHtmlType", validateBearerToken, getWhitePageHtmlType);
-
 router.get("/getBlackPages", validateBearerToken, validate.getBlackPages(), getBlackPages);
-router.post("/uploadImg", validateBearerToken, uploadImg);
 router.get("/getCharacters", validateBearerToken, validate.getBlackPages(), getCharacters);
-
 router.get("/getBlackPagesV2", getBlackPagesV2);
 router.get("/getGeos", getGeos);
 router.get("/getCharactersV2", getCharactersV2);
-
 router.get("/bycmpId", bycmpId);
-
-// router.post("/addWhitePage", validate.checkRequestBody , addWhitePage);
-// router.post("/deleteWhitePage", validate.checkRequestBody , addWhitePage);
-// router.put("/updateWhitePage", validate.checkRequestBody , addWhitePage);
-// router.get("/getWhitePage", validate.checkRequestBody , addWhitePage);
 
 export default router;
