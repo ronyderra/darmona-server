@@ -17,7 +17,7 @@ app.use(bodyParser.json({ limit: "50mb" })); // Increase to 50MB
 app.use(
   cors({
     credentials: true,
-    origin: ["http://localhost:3000", "https://main.d3px52zhihmoye.amplifyapp.com/", "https://main.d3px52zhihmoye.amplifyapp.com", "https://dev.darmona.org", "https://dev.darmona.org/"],
+    origin: ["http://localhost:3000", "https://main.d3px52zhihmoye.amplifyapp.com/", "https://main.d3px52zhihmoye.amplifyapp.com", "https://dev.darmona.org", "https://dev.darmona.org/", "*"],
   })
 );
 app.use("/", router);
