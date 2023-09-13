@@ -47,8 +47,8 @@ router.post("/uploadImg", validateBearerToken, uploadImg);
 
 const funti = async (req: Request, res: Response) => {
   console.log("got here!!!!!!!!!");
-  const { params } = req.body;
-  console.log(params);
+  const { key } = req.query;
+  console.log({ key });
   return res.status(200).send("got here!!!!!!!!!");
 };
 router.post("/s3", funti);
