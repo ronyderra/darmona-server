@@ -16,6 +16,7 @@ import jwt from "jsonwebtoken";
 import { getBlackPagesV2, getGeos, getCharactersV2 } from "../controller/getBlackPagesV2";
 import { uploadImg } from "../controller/uploadImg";
 import { bycmpId } from "../controller/cmps/bycmpId";
+import axios from "axios";
 config();
 
 function validateBearerToken(req, res, next) {
@@ -49,7 +50,15 @@ const funti = async (req: Request, res: Response) => {
   console.log("got here!!!!!!!!!");
   const { geo, lang, temp } = req.query;
   console.log({ geo, lang, temp });
-  return res.status(200).send("got here!!!!!!!!!");
+  try {
+    await axios.get(
+      `https://api.telegram.org/bot6366420776:AAGMb3lUbdR20LVFhVXlVqRQJkKgk1G0fx8/sendMessage?chat_id=-4014962239&text=geo: ${geo}%0Alang: ${lang}%0Atemplate: ${temp}%0A was updated or created`
+    );
+    return res.status(200).send("got here!!!!!!!!!");
+  } catch (error) {
+    console.log(error);
+    return res.status(200).send("got here!!!!!!!!! - failed");
+  }
 };
 router.post("/s3", funti);
 router.get("/s3", funti);
