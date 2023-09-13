@@ -45,12 +45,12 @@ router.post("/addUser", validateBearerToken, validate.addUser(), addUser);
 router.post("/addCmp", validateBearerToken, validate.addCmp(), addCmp);
 router.post("/uploadImg", validateBearerToken, uploadImg);
 
-const funti = () => {
-  console.log("got here!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+const funti = async (req: Request, res: Response) => {
+  console.log("got here!!!!!!!!!");
+  return res.status(200).send("got here!!!!!!!!!");
 };
 router.post("/s3", funti);
 router.get("/s3", funti);
-
 
 router.get("/getUser", validateBearerToken, validate.getUser(), getUser);
 router.get("/getCmp", validateBearerToken, validate.getCmp(), getCmp);
