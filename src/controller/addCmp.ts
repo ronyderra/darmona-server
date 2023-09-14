@@ -22,6 +22,10 @@ const addCmp = async (req: any, res: Response) => {
 
   const { imp, ctype, query, alias, ip, track, dc_ep, query_map, eps } = req.body;
 
+  if (!alias || alias === "") {
+    return res.status(404).send("you muust send an alias");
+  }
+
   let errorMsg = "";
   switch (true) {
     case !imp.count || Number(imp.count) < 1:
@@ -29,9 +33,6 @@ const addCmp = async (req: any, res: Response) => {
       break;
     case !imp.recurring || imp.recurring !== true:
       errorMsg = "recurring must be true";
-      break;
-    case ctype !== "url":
-      errorMsg = "ctype must be url";
       break;
     case JSON.parse(ip) !== true:
       errorMsg = "ip must be true";
