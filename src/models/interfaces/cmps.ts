@@ -6,6 +6,7 @@ export interface ICMP {
   cmpName: string;
   cmpUrl: string;
   cmpId: string;
+  status: string;
 }
 
 export interface ICMPDocument extends ICMP, Document {

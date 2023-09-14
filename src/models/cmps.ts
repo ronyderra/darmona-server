@@ -9,12 +9,13 @@ export const docCMP = {
   cmpName: { type: String },
   cmpUrl: { type: String },
   cmpId: { type: String },
+  status: { type: String },
   createdAt: { type: Date },
 };
 
 export const schema = CustomDocumentBuild(docCMP, "cmps");
 
-schema.statics.findCmp = async function findUser(cmpId: string) {
+schema.statics.findCmp = async function findCmp(cmpId: string) {
   try {
     const query = this.findOne({ cmpId });
     return query.exec().then((doc: any) => doc);
