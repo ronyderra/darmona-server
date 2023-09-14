@@ -77,6 +77,7 @@ const addCmp = async (req: any, res: Response) => {
       user: user?.username,
       cmpName: req.body.name,
       cmpUrl: `https://${req.body.alias}/?cmp=${hid}`,
+      status:"new",
       cmpId: hid,
     };
 
