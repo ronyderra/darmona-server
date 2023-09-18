@@ -74,7 +74,7 @@ const addCmp = async (req: any, res: Response) => {
     }
 
     const cmpDoc: ICMP = {
-      userId: user?._id,
+      userId: new ObjectId(user?._id),
       user: user?.username,
       cmpName: req.body.name,
       cmpUrl: `https://${req.body.alias}/?cmp=${hid}`,
