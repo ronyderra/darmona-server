@@ -1,5 +1,6 @@
 import { Document, Model } from "mongoose";
 import { ObjectId } from "mongodb";
+import { ICMP } from "./cmps";
 
 export interface IUSER {
   username: string;
@@ -8,8 +9,8 @@ export interface IUSER {
   thriveId: string;
   email: string;
   blackPageDomains: string[];
-  cmps: CMP[];
   role: Roles;
+  cmps?: any;
   count?: number;
 }
 
@@ -17,12 +18,6 @@ export enum Roles {
   Admin = "admin",
   Affiliate = "affiliate",
 }
-
-export interface CMP {
-  name: string;
-  url: string;
-}
-
 export interface IUSERDocument extends IUSER, Document {
   toJSON(): IUSERDocument;
 }

@@ -3,14 +3,13 @@ import { validationResult } from "express-validator";
 import { route53Manager } from "../services/aws-route53";
 import USER from "../models/user";
 import { ObjectId } from "mongodb";
+import CMP, { ICMP } from "../models/cmps";
 
 function filterItemsNotInArray(a, b) {
   const result = [];
   for (const aItem of a) {
-    const existsInB = b.some((bItem) => {
-      const url = new URL(bItem);
-      const domainWithSubdomain = url.hostname;
-      return domainWithSubdomain === aItem;
+    const existsInB = b.some(bItem => {
+      return bItem === aItem;
     });
     if (!existsInB) {
       result.push(aItem);
@@ -26,24 +25,15 @@ const getAvailableAliases = async (req: Request, res: Response) => {
       return res.status(400).json({ errors: errors.array() });
     }
     const { _id, domain } = req.query;
-
-    const user = await USER.getById(new ObjectId(String(_id)));
-    if (!user) {
-      return res.status(400).send("user not found");
-    }
-
-    const userRecords = user.cmps
-      .map((i) => i.url)
-      .filter((i) => i.includes(String(domain)));
+    const userCmps = await CMP.getCmpsByUser(new ObjectId(String(_id)));
+    const userRecords = userCmps.map(i => i.domain).filter(i => i.includes(String(domain)));
 
     const allRecords = await route53Manager.getAllRecordsInHostedZone(domain);
     if (!allRecords) {
       return res.status(400).send("records not found");
     }
 
-    const aRecords = allRecords?.ResourceRecordSets.filter(
-      (i: any) => i?.Type === "A"
-    ).map((i: any) => i?.Name.slice(0, -1));
+    const aRecords = allRecords?.ResourceRecordSets.filter((i: any) => i?.Type === "A").map((i: any) => i?.Name.slice(0, -1));
     if (!aRecords) {
       return res.status(400).send("aRecords not found");
     }

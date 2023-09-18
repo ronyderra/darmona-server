@@ -87,13 +87,13 @@ const addCmp = async (req: any, res: Response) => {
     console.log("CREATED NEW JSON", file);
     if (file) {
       await USER.incrementCount();
-      user.cmps.push({
-        name: req.body.name,
-        url: `https://${req.body.alias}/?cmp=${hid}`,
-      });
-      const updated = await USER.updateById(req.body._id, user);
-      await CMP.createNew(cmpDoc);
-      return res.status(200).json(updated);
+      // user.cmps.push({
+      //   name: req.body.name,
+      //   url: `https://${req.body.alias}/?cmp=${hid}`,
+      // });
+      // const updated = await USER.updateById(req.body._id, user);
+     const newCmp = await CMP.createNew(cmpDoc);
+      return res.status(200).json(newCmp);
     }
   } catch (error) {
     console.log(error);

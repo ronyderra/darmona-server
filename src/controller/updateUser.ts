@@ -31,9 +31,6 @@ const updateUser = async (req: Request, res: Response) => {
   if (req.body.data.blackPageDomain) {
     userToUpdate.blackPageDomains.push(req.body.data.blackPageDomain);
   }
-  if (req.body.data.cmp) {
-    userToUpdate.cmps.push(req.body.data.cmp);
-  }
   if (req.body.data.role) {
     userToUpdate.role = req.body.data.role;
   }

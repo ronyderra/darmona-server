@@ -3,6 +3,8 @@ import { validationResult } from "express-validator";
 import USER from "../models/user";
 import { IUSER, IUSERDocument } from "../models/interfaces/user";
 import s3FileManager from "../services/aws-s3";
+import CMP from "../models/cmps";
+import { ObjectId } from "mongodb";
 
 const updateCmp = async (req: Request, res: Response) => {
   const errors = validationResult(req);
@@ -16,21 +18,22 @@ const updateCmp = async (req: Request, res: Response) => {
   if (!userToUpdate) {
     return res.status(400).send("user not found");
   }
-
-  const cmp = userToUpdate.cmps.find((i) => i.url === req.body.url);
+  
+  const userCmps = await CMP.getCmpsByUser(new ObjectId(req.body._id));
+  const cmp = userCmps.find((i) => i.domain === req.body.url);
   if (!cmp) {
     return res.status(400).send("campaign not found");
   }
 
   if (req.body.name) {
-    const findIndex = userToUpdate.cmps.findIndex(
-      (item) => item.url == req.body.url
+    const findIndex = userCmps.findIndex(
+      (item) => item.domain == req.body.url
     );
-    userToUpdate.cmps[findIndex].name = req.body.name;
+    userCmps[findIndex].cmpName = req.body.name;
     await USER.updateById(req.body._id, userToUpdate);
   }
 
-  const url = new URL(cmp.url);
+  const url = new URL(cmp.cmpUrl);
   const parameters = new URLSearchParams(url.search);
   const cmpId = parameters.get("cmp");
   if (!cmpId) {
