@@ -12,35 +12,23 @@ const updateCmp = async (req: Request, res: Response) => {
     return res.status(400).json({ errors: errors.array() });
   }
 
-  let userToUpdate: IUSERDocument | undefined = await USER.getById(
-    req.body._id
-  );
+  let userToUpdate: IUSERDocument | undefined = await USER.getById(req.body._id);
   if (!userToUpdate) {
     return res.status(400).send("user not found");
   }
-  
+
   const userCmps = await CMP.getCmpsByUser(new ObjectId(req.body._id));
-  const cmp = userCmps.find((i) => i.domain === req.body.url);
+  const cmp = userCmps?.find(i => i.cmpId === req.body.url);
   if (!cmp) {
     return res.status(400).send("campaign not found");
   }
 
   if (req.body.name) {
-    const findIndex = userCmps.findIndex(
-      (item) => item.domain == req.body.url
-    );
-    userCmps[findIndex].cmpName = req.body.name;
-    await USER.updateById(req.body._id, userToUpdate);
+    cmp.cmpName = req.body.name;
+    await CMP.updateById(cmp._id, cmp);
   }
 
-  const url = new URL(cmp.cmpUrl);
-  const parameters = new URLSearchParams(url.search);
-  const cmpId = parameters.get("cmp");
-  if (!cmpId) {
-    return res.status(400).send("cmp id not found");
-  }
-
-  const file = await s3FileManager.getFile(cmpId);
+  const file = await s3FileManager.getFile(cmp.cmpId);
   if (!file) {
     return res.status(400).send("file not found");
   }
@@ -70,7 +58,7 @@ const updateCmp = async (req: Request, res: Response) => {
     file.query_map = req.body.query_map;
   }
   if (req.body.eps) {
-    file.eps = req.body.eps.map((i) => {
+    file.eps = req.body.eps.map(i => {
       return {
         geo: i.geo,
         weight: i.weight,
@@ -79,7 +67,7 @@ const updateCmp = async (req: Request, res: Response) => {
     });
   }
 
-  const resp = await s3FileManager.updateFile(cmpId, file);
+  const resp = await s3FileManager.updateFile(cmp.cmpId, file);
   return res.status(200).json(resp);
 };
 

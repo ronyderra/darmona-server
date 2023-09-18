@@ -18,4 +18,5 @@ export interface ICMPModel extends Model<ICMPDocument> {
   findCmp(cmpId: string): Promise<ICMPDocument>;
   createNew(doc: ICMP): Promise<ICMPDocument>;
   getCmpsByUser(userId: ObjectId): Promise<ICMPDocument[]>;
+  updateById(_id: ObjectId, updatedDocument: any): Promise<ICMPDocument>;
 }
