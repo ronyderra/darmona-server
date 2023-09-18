@@ -1,10 +1,10 @@
-import { ObjectId } from "bson";
+import { ObjectId } from "mongodb";
 import { model, Schema } from "mongoose";
 import { CustomDocumentBuild } from "../mongodb/documentDefaults";
 import { ICMPDocument, ICMPModel, ICMP } from "./interfaces/cmps";
 
 export const docCMP = {
-  userId: { type: String },
+  userId: { type: ObjectId },
   user: { type: String },
   cmpName: { type: String },
   cmpUrl: { type: String },
@@ -19,6 +19,16 @@ export const schema = CustomDocumentBuild(docCMP, "cmps");
 schema.statics.findCmp = async function findCmp(cmpId: string) {
   try {
     const query = this.findOne({ cmpId });
+    return query.exec().then((doc: any) => doc);
+  } catch (error: any) {
+    console.log(error.message);
+    return undefined;
+  }
+};
+
+schema.statics.getCmpsByUser = async function getCmpsByUser(userId: ObjectId) {
+  try {
+    const query = this.find({ userId });
     return query.exec().then((doc: any) => doc);
   } catch (error: any) {
     console.log(error.message);
