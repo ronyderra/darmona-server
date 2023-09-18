@@ -10,6 +10,7 @@ export const docCMP = {
   cmpUrl: { type: String },
   cmpId: { type: String },
   status: { type: String },
+  domain: { type: String },
   createdAt: { type: Date },
 };
 

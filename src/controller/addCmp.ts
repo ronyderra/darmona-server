@@ -78,8 +78,9 @@ const addCmp = async (req: any, res: Response) => {
       user: user?.username,
       cmpName: req.body.name,
       cmpUrl: `https://${req.body.alias}/?cmp=${hid}`,
-      status:"new",
+      status: "new",
       cmpId: hid,
+      domain: req.body.alias,
     };
 
     const file = await s3FileManager.createFile(hid, json);
