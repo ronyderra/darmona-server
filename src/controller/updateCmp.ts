@@ -27,6 +27,10 @@ const updateCmp = async (req: Request, res: Response) => {
     cmp.cmpName = req.body.name;
     await CMP.updateById(cmp._id, cmp);
   }
+  if (req.body.status) {
+    cmp.status = req.body.status;
+    await CMP.updateById(cmp._id, cmp);
+  }
 
   const file = await s3FileManager.getFile(cmp.cmpId);
   if (!file) {
