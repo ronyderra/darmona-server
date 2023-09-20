@@ -1,4 +1,5 @@
 import { body, query } from "express-validator";
+import jwt from "jsonwebtoken";
 
 export class UserController {
   constructor() {}
@@ -108,3 +109,19 @@ export class UserController {
     return [this.queryValidations["path"]];
   }
 }
+
+export const validateBearerToken = (req, res, next) => {
+  const authHeader = req.headers["authorization"];
+
+  if (!authHeader || !authHeader.startsWith("Bearer ")) {
+    return res.status(401).json({ error: "Unauthorized - Bearer token not found" });
+  }
+  const token = authHeader.split(" ")[1];
+  jwt.verify(token, process.env.BEARER, (err, decodedToken) => {
+    if (err) {
+      return res.status(401).json({ error: "Unauthorized - Invalid bearer token" });
+    }
+    req.decodedToken = decodedToken;
+    next();
+  });
+};

@@ -12,28 +12,13 @@ import updateCmp from "../controller/updateCmp";
 import getCmp from "../controller/getCmp";
 import { getSnowData, getRows, countByDateAndParam } from "../controller/getSnowData";
 import { config } from "dotenv";
-import jwt from "jsonwebtoken";
+import { validateBearerToken } from "./validation";
 import { getBlackPagesV2, getGeos, getCharactersV2 } from "../controller/getBlackPagesV2";
 import { uploadImg } from "../controller/uploadImg";
 import { bycmpId } from "../controller/cmps/bycmpId";
 import { handleNewPrelander } from "../controller/lambda/prelanders";
+import { handleNewWhitePage } from "../controller/lambda/whitePages";
 config();
-
-function validateBearerToken(req, res, next) {
-  const authHeader = req.headers["authorization"];
-
-  if (!authHeader || !authHeader.startsWith("Bearer ")) {
-    return res.status(401).json({ error: "Unauthorized - Bearer token not found" });
-  }
-  const token = authHeader.split(" ")[1];
-  jwt.verify(token, process.env.BEARER, (err, decodedToken) => {
-    if (err) {
-      return res.status(401).json({ error: "Unauthorized - Invalid bearer token" });
-    }
-    req.decodedToken = decodedToken;
-    next();
-  });
-}
 
 const router = express.Router();
 const validate = new UserController();
@@ -47,8 +32,7 @@ router.post("/addCmp", validateBearerToken, validate.addCmp(), addCmp);
 router.post("/uploadImg", validateBearerToken, uploadImg);
 
 router.get("/addPrelander", handleNewPrelander);
-// router.get("/addWhitePage", handleNewWhitePage);
-
+router.get("/addWhitePage", handleNewWhitePage);
 router.get("/getUser", validateBearerToken, validate.getUser(), getUser);
 router.get("/getCmp", validateBearerToken, validate.getCmp(), getCmp);
 router.get("/getAvailableAliases", validateBearerToken, validate.getAvailableAliases(), getAvailableAliases);
