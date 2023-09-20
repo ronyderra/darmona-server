@@ -24,6 +24,7 @@ export const handleNewWhitePage = async (req: Request, res: Response) => {
     }
     return;
   } catch (error) {
+    console.log("error in handleNewWhitePage: ", error.message);
     return res.status(400).send("you must send language && topic && domain");
   }
 };
