@@ -9,17 +9,19 @@ export const handleNewWhitePage = async (req: Request, res: Response) => {
 
     const keySplit = String(key).split("/");
     const docs = await WHITE_PAGES.getWhitePageByKey(String(key).replace("templates/", ""));
-    console.log(docs);
-    return;
-    const doc: IWHITEPAGE = {
-      language: keySplit[1],
-      topic: keySplit[2],
-      link: String(key).replace("templates/", ""),
-      domain: "any",
-      linkType: "html",
-    };
-    const result = await WHITE_PAGES.createNew(doc);
-    console.log({ result });
+    if (!docs) {
+      const doc: IWHITEPAGE = {
+        language: keySplit[1],
+        topic: keySplit[2],
+        link: String(key).replace("templates/", ""),
+        domain: "any",
+        linkType: "html",
+      };
+      const result = await WHITE_PAGES.createNew(doc);
+      console.log({ result });
+    } else {
+      console.log("Wite page exists: ", key);
+    }
     return;
   } catch (error) {
     return res.status(400).send("you must send language && topic && domain");
