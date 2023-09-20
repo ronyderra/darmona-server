@@ -4,7 +4,7 @@ import WHITE_PAGES, { IWHITEPAGE } from "../../models/whitePage";
 export const handleNewWhitePage = async (req: Request, res: Response) => {
   try {
     const { key } = req.query;
-    console.log("New white page in templatesd: ", { key });
+    console.log("New white page in templates: ", { key });
     res.status(200).send(key);
 
     const keySplit = String(key).split("/");
