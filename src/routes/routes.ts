@@ -46,7 +46,8 @@ router.post("/addUser", validateBearerToken, validate.addUser(), addUser);
 router.post("/addCmp", validateBearerToken, validate.addCmp(), addCmp);
 router.post("/uploadImg", validateBearerToken, uploadImg);
 
-router.get("/handleNewPrelander", handleNewPrelander);
+router.get("/addPrelander", handleNewPrelander);
+// router.get("/addWhitePage", handleNewWhitePage);
 
 router.get("/getUser", validateBearerToken, validate.getUser(), getUser);
 router.get("/getCmp", validateBearerToken, validate.getCmp(), getCmp);
