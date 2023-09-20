@@ -8,7 +8,9 @@ export const handleNewWhitePage = async (req: Request, res: Response) => {
     res.status(200).send(key);
 
     const keySplit = String(key).split("/");
-
+    const docs = await WHITE_PAGES.getWhitePageByKey(String(key).replace("templates/", ""));
+    console.log(docs);
+    return;
     const doc: IWHITEPAGE = {
       language: keySplit[1],
       topic: keySplit[2],
