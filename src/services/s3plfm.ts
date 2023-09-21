@@ -98,6 +98,7 @@ class PlFileManager {
       return undefined;
     }
   }
+  
   async uploadImage(key, base64Image, bucketName) {
     try {
       const match = base64Image.match(/^data:(.+);base64,(.+)$/);
