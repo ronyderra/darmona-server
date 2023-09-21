@@ -17,8 +17,6 @@ class NameCom {
 
   async checkAvailability(domainName: string) {
     try {
-      console.log(this.auth);
-
       const data = {
         domainNames: [domainName],
       };
@@ -26,7 +24,38 @@ class NameCom {
         auth: this.auth,
         headers: this.headers,
       });
-      console.log(resp.data);
+      return resp.data;
+    } catch (err) {
+      console.log(err.message);
+      return err;
+    }
+  }
+  async buyDomain(domainName: string) {
+    try {
+      const data = {
+        domain: {
+          domainName: domainName,
+        },
+        purchasePrice: 12.99,
+      };
+      const resp = await axios.post(this.NAME_BASEURL + "/domains", data, {
+        auth: this.auth,
+        headers: this.headers,
+      });
+      return resp.data;
+    } catch (err) {
+      console.log(err.message);
+      return err;
+    }
+  }
+  async setNameservers(domainName: string, nameservers: string[]) {
+    try {
+      const data = { nameservers };
+      const resp = await axios.post(this.NAME_BASEURL + `/domains/${domainName}:setNameservers`, data, {
+        auth: this.auth,
+        headers: this.headers,
+      });
+      return resp.data;
     } catch (err) {
       console.log(err.message);
       return err;
