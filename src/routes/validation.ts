@@ -5,7 +5,8 @@ export class UserController {
   constructor() {}
 
   bodyValidations = {
-    _id: body("_id").isLength({ min: 6 }).withMessage("_id must be at least 6 characters long").escape(),
+    _id: body("_id").isLength({ min: 6 }).withMessage("_id must be at least 6 characters long").escape(), //user id
+    cmpDocId: body("cmpDocId").isLength({ min: 6 }).withMessage("cmpDocId must be at least 6 characters long").escape(), //user id
     username: body("username").notEmpty().withMessage("Username is required").escape(),
     email: body("email").isEmail().withMessage("Invalid email address").escape(),
     password: body("password").isLength({ min: 6 }).withMessage("Password must be at least 6 characters long").escape(),
@@ -92,6 +93,9 @@ export class UserController {
       this.bodyValidations["query_map_optional"],
       this.bodyValidations["eps_optional"],
     ];
+  }
+  updateCmpDoc() {
+    return [this.bodyValidations["cmpDocId"]];
   }
   getCmp() {
     return [this.queryValidations["cmpId"]];

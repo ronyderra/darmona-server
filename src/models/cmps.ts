@@ -36,6 +36,16 @@ schema.statics.getCmpsByUser = async function getCmpsByUser(userId: ObjectId) {
   }
 };
 
+schema.statics.updateStatus = async function updateStatus(cmpDocId: ObjectId, status: string) {
+  try {
+    const query = this.updateOne({ _id: cmpDocId }, { status });
+    return query.exec().then((doc: any) => doc);
+  } catch (error: any) {
+    console.log(error.message);
+    return undefined;
+  }
+};
+
 const CMP: ICMPModel = model<ICMPDocument, ICMPModel>("cmps", schema);
 export default CMP;
 export { ICMP, ICMPModel };

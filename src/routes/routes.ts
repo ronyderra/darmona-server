@@ -18,6 +18,7 @@ import { uploadImg } from "../controller/uploadImg";
 import { bycmpId } from "../controller/cmps/bycmpId";
 import { handleNewPrelander } from "../controller/lambda/prelanders";
 import { handleNewWhitePage } from "../controller/lambda/whitePages";
+import { updateCmpDoc } from "../controller/cmps/updateCmpDoc";
 config();
 
 const router = express.Router();
@@ -25,6 +26,7 @@ const validate = new UserController();
 
 router.put("/updateUser", validateBearerToken, validate.updateUser(), updateUser);
 router.put("/updateCmp", validateBearerToken, validate.updateCmp(), updateCmp);
+router.put("/updateCmpDoc", validateBearerToken, validate.updateCmpDoc(), updateCmpDoc);
 
 router.post("/login", validate.login(), login);
 router.post("/addUser", validateBearerToken, validate.addUser(), addUser);
