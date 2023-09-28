@@ -20,6 +20,7 @@ import { handleNewPrelander } from "../controller/lambda/prelanders";
 import { handleNewWhitePage } from "../controller/lambda/whitePages";
 import { updateCmpDoc } from "../controller/cmps/updateCmpDoc";
 import checkAvailability from "../controller/domainManager/checkAvailability";
+import buyDomain from "../controller/domainManager/buyDomain";
 config();
 
 const router = express.Router();
@@ -52,5 +53,6 @@ router.get("/getCharactersV2", getCharactersV2);
 router.get("/bycmpId", bycmpId);
 // domain.com
 router.get("/checkAvailability", validateBearerToken, validate.checkAvailability(), checkAvailability);
+router.post("/buyDomain", validateBearerToken, validate.buyDomain(), buyDomain);
 
 export default router;

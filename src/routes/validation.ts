@@ -2,7 +2,7 @@ import { body, query } from "express-validator";
 import jwt from "jsonwebtoken";
 
 export class UserController {
-  constructor() {}
+  constructor() { }
 
   bodyValidations = {
     _id: body("_id").isLength({ min: 6 }).withMessage("_id must be at least 6 characters long").escape(), //user id
@@ -21,6 +21,7 @@ export class UserController {
     query_map: body("query_map").isObject().withMessage("query_map must be an object").notEmpty().withMessage("query_map cannot be empty"),
     eps: body("eps").isArray().withMessage("eps must be an array").notEmpty().withMessage("eps cannot be empty"),
     url: body("url").notEmpty().withMessage("must send url"),
+    domainName: body("domainName").notEmpty().withMessage("must send domainName"),
 
     imp_optional: body("imp").optional().isObject().notEmpty().withMessage("imp must be an object and cannot be empty"),
     ctype_optional: body("ctype").optional().notEmpty().withMessage("must send ctype").escape(),
@@ -56,6 +57,9 @@ export class UserController {
   }
   addUser() {
     return [this.bodyValidations["username"], this.bodyValidations["email"], this.bodyValidations["password"]];
+  }
+  buyDomain() {
+    return [this.bodyValidations["domainName"]];
   }
   getUser() {
     return [this.queryValidations["_id"]];
