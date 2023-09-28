@@ -43,7 +43,7 @@ class NameCom {
       });
       return resp.data;
     } catch (err) {
-      console.log(err.message);
+      console.log("get here");
       return err;
     }
   }
