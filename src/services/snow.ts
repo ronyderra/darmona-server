@@ -24,18 +24,22 @@ class SnowManager {
     });
   }
 
-  async executeSnow(from, to, cmp) {
+  async countSkipTraffic(from, to, cmp) {
     try {
       return new Promise((resolve, reject) => {
         this.snowConnect.execute({
-          sqlText: `SELECT skip, COUNT(*) AS count FROM fire_sys.public.events as a left join fire_sys.public.skip_reasons_list as b on a.sr = b.id WHERE 
-       DATE(ts) between '${from}' and '${to}' and event = 'tracked traffic' and cmp='${cmp}' and skip IN (TRUE, FALSE)
-      GROUP BY skip;`,
+          sqlText:
+            `SELECT 
+          SUM(CASE WHEN skip = FALSE THEN 1 ELSE 0 END) AS passed,
+          SUM(CASE WHEN skip = TRUE THEN 1 ELSE 0 END) AS not_passed
+          
+         FROM fire_sys.public.events as a left join fire_sys.public.skip_reasons_list as b on a.sr = b.id 
+         WHERE DATE(ts) between '${from}' and '${to}' and event = 'tracked traffic' and cmp='${cmp}' ;`,
           complete: function (err, stmt, rows) {
             if (err) {
               console.error(
                 "Failed to execute statement due to the following error: " +
-                  err.message
+                err.message
               );
               reject(err);
             } else {
@@ -48,6 +52,30 @@ class SnowManager {
       throw err;
     }
   }
+  // async executeSnow(from, to, cmp) {
+  //   try {
+  //     return new Promise((resolve, reject) => {
+  //       this.snowConnect.execute({
+  //         sqlText: `SELECT skip, COUNT(*) AS count FROM fire_sys.public.events as a left join fire_sys.public.skip_reasons_list as b on a.sr = b.id WHERE 
+  //      DATE(ts) between '${from}' and '${to}' and event = 'tracked traffic' and cmp='${cmp}' and skip IN (TRUE, FALSE)
+  //     GROUP BY skip;`,
+  //         complete: function (err, stmt, rows) {
+  //           if (err) {
+  //             console.error(
+  //               "Failed to execute statement due to the following error: " +
+  //                 err.message
+  //             );
+  //             reject(err);
+  //           } else {
+  //             resolve(rows);
+  //           }
+  //         },
+  //       });
+  //     });
+  //   } catch (err) {
+  //     throw err;
+  //   }
+  // }
   async getRows(from, to, cmp): Promise<[]> {
     try {
       return new Promise((resolve, reject) => {
@@ -57,7 +85,7 @@ class SnowManager {
             if (err) {
               console.error(
                 "Failed to execute statement due to the following error: " +
-                  err.message
+                err.message
               );
               reject(err);
             } else {
@@ -70,11 +98,11 @@ class SnowManager {
       throw err;
     }
   }
-  async countByDateAndParam(from, to, by , sort): Promise<[]> {
+  async countByDateAndParam(from, to, by, sort): Promise<[]> {
     try {
       return new Promise((resolve, reject) => {
-   
-           this.snowConnect.execute({
+
+        this.snowConnect.execute({
           sqlText: `SELECT  ${by},
           SUM(CASE WHEN skip = FALSE THEN 1 ELSE 0 END) AS passed,
           SUM(CASE WHEN skip = TRUE THEN 1 ELSE 0 END) AS not_passed,
@@ -89,7 +117,7 @@ class SnowManager {
             if (err) {
               console.error(
                 "Failed to execute statement due to the following error: " +
-                  err.message
+                err.message
               );
               reject(err);
             } else {

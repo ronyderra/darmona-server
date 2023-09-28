@@ -9,7 +9,7 @@ export const getSnowData = async (req: Request, res: Response) => {
   }
   const { from, to, cmp } = req.query;
 
-  const resp = await snowManager.executeSnow(from, to, cmp);
+  const resp = await snowManager.countSkipTraffic(from, to, cmp);
   console.log(resp);
 
   return res.status(200).json({ resp });
