@@ -13,7 +13,7 @@ class NameCom {
   headers = {
     "Content-Type": "application/json",
   };
-  constructor() {}
+  constructor() { }
 
   async checkAvailability(domainName: string) {
     try {
@@ -35,8 +35,7 @@ class NameCom {
       const data = {
         domain: {
           domainName: domainName,
-        },
-        purchasePrice: 12.99,
+        }
       };
       const resp = await axios.post(this.NAME_BASEURL + "/domains", data, {
         auth: this.auth,
