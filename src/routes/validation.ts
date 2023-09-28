@@ -20,6 +20,7 @@ export class UserController {
     dc_ep: body("dc_ep").notEmpty().withMessage("must send dc_ep"),
     query_map: body("query_map").isObject().withMessage("query_map must be an object").notEmpty().withMessage("query_map cannot be empty"),
     eps: body("eps").isArray().withMessage("eps must be an array").notEmpty().withMessage("eps cannot be empty"),
+    nameservers: body("nameservers").isArray().withMessage("nameservers must be an array").notEmpty().withMessage("nameservers cannot be empty"),
     url: body("url").notEmpty().withMessage("must send url"),
     domainName: body("domainName").notEmpty().withMessage("must send domainName"),
 
@@ -120,6 +121,9 @@ export class UserController {
   // name.com
   checkAvailability() {
     return [this.queryValidations["checkAvailability"]];
+  }
+  setNameservers() {
+    return [this.bodyValidations["nameservers"], this.bodyValidations["domainName"]];
   }
 }
 

@@ -21,6 +21,7 @@ import { handleNewWhitePage } from "../controller/lambda/whitePages";
 import { updateCmpDoc } from "../controller/cmps/updateCmpDoc";
 import checkAvailability from "../controller/domainManager/checkAvailability";
 import buyDomain from "../controller/domainManager/buyDomain";
+import setNameservers from "../controller/domainManager/setNameservers";
 config();
 
 const router = express.Router();
@@ -54,5 +55,6 @@ router.get("/bycmpId", bycmpId);
 // domain.com
 router.get("/checkAvailability", validateBearerToken, validate.checkAvailability(), checkAvailability);
 router.post("/buyDomain", validateBearerToken, validate.buyDomain(), buyDomain);
+router.post("/setNameservers", validateBearerToken, validate.buyDomain(), setNameservers);
 
 export default router;
