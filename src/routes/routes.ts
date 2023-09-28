@@ -19,6 +19,7 @@ import { bycmpId } from "../controller/cmps/bycmpId";
 import { handleNewPrelander } from "../controller/lambda/prelanders";
 import { handleNewWhitePage } from "../controller/lambda/whitePages";
 import { updateCmpDoc } from "../controller/cmps/updateCmpDoc";
+import checkAvailability from "../controller/domainManager/checkAvailability";
 config();
 
 const router = express.Router();
@@ -49,5 +50,7 @@ router.get("/getBlackPagesV2", getBlackPagesV2);
 router.get("/getGeos", getGeos);
 router.get("/getCharactersV2", getCharactersV2);
 router.get("/bycmpId", bycmpId);
+// domain.com
+router.get("/checkAvailability", validateBearerToken, validate.checkAvailability(), checkAvailability);
 
 export default router;

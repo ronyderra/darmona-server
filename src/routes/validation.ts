@@ -45,6 +45,7 @@ export class UserController {
     cmp: query("cmp").notEmpty().withMessage("must send cmp"),
     by: query("by").notEmpty().withMessage("must send by"),
     path: query("path").exists().withMessage("must send path"),
+    checkAvailability: query("domainName").exists().withMessage("must send domainName"),
   };
 
   checkRequestBody(req, res, next) {
@@ -111,6 +112,10 @@ export class UserController {
   }
   getBlackPages() {
     return [this.queryValidations["path"]];
+  }
+  // name.com
+  checkAvailability() {
+    return [this.queryValidations["checkAvailability"]];
   }
 }
 
