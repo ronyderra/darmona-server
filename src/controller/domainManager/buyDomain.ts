@@ -3,20 +3,21 @@ import { validationResult } from "express-validator";
 import domainManager from "../../services/name";
 
 const buyDomain = async (req: Request, res: Response) => {
-    const errors = validationResult(req);
-    if (!errors.isEmpty()) {
-        return res.status(400).json({ errors: errors.array() });
-    }
-    const { domainName } = req.body;
-    console.log({ domainName });
-
-    const resp = await domainManager.buyDomain(String(domainName));
-    console.log(resp.response.data);
-
-    if (resp.response.status !== 200) {
-        return res.status(400).send(resp.response.data);
-    } else {
-        return res.status(200).json(resp);
+    try {
+        const errors = validationResult(req);
+        if (!errors.isEmpty()) {
+            return res.status(400).json({ errors: errors.array() });
+        }
+        const { domainName } = req.body;
+        const resp = await domainManager.buyDomain(String(domainName));
+        console.log(resp.data);
+        if (!resp) {
+            return res.status(400).send("Domain not available");
+        }
+        return res.status(200).json(resp.data);
+    } catch (error) {
+        console.log("failed", error.message);
+        return res.status(400).send("Domain not available");
     }
 };
 

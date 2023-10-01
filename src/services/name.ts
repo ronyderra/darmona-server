@@ -41,10 +41,10 @@ class NameCom {
         auth: this.auth,
         headers: this.headers,
       });
-      return resp.data;
+      return resp;
     } catch (err) {
-      console.log("get here");
-      return err;
+      console.log(err.message);
+      return undefined;
     }
   }
   async setNameservers(domainName: string, nameservers: string[]) {
