@@ -18,9 +18,9 @@ class NameCom {
   async checkAvailability(domainName: string) {
     try {
       const data = {
-        domainNames: [domainName],
+        keyword: domainName,
       };
-      const resp = await axios.post(this.NAME_BASEURL + "/domains:checkAvailability", data, {
+      const resp = await axios.post(this.NAME_BASEURL + "/domains:search", data, {
         auth: this.auth,
         headers: this.headers,
       });
