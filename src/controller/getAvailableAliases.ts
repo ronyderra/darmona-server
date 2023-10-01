@@ -26,6 +26,15 @@ const getAvailableAliases = async (req: Request, res: Response) => {
     }
     const { _id, domain } = req.query;
     const userCmps = await CMP.getCmpsByUser(new ObjectId(String(_id)));
+    const user = await USER.getById(new ObjectId(String(_id)))
+    console.log(domain);
+
+    if (domain === "*") {
+      const availableRootDomains = filterItemsNotInArray(user.aliases, userCmps.map(i => i.domain));
+      console.log(availableRootDomains);
+      return res.status(200).json(availableRootDomains);
+    }
+
     const userRecords = userCmps.map(i => i.domain).filter(i => i.includes(String(domain)));
 
     const allRecords = await route53Manager.getAllRecordsInHostedZone(domain);
