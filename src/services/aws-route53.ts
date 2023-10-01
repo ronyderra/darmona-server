@@ -42,40 +42,35 @@ class Route53Manager {
     }
   }
 
-  // async createRecordInHostedZone(
-  //   domainName,
-  //   recordName,
-  //   recordType,
-  //   recordValue
-  // ) {
-  //   try {
-  //     const hostedZone = await this.getHostedZoneByName(domainName);
-  //     const hostedZoneId = hostedZone.Id.split("/").pop();
+  async createRecordInHostedZone(domainName, recordName) {
+    try {
+      const hostedZone = await this.getHostedZoneByName(domainName);
+      const hostedZoneId = hostedZone.Id.split("/").pop();
 
-  //     const params = {
-  //       HostedZoneId: hostedZoneId,
-  //       ChangeBatch: {
-  //         Changes: [
-  //           {
-  //             Action: "CREATE",
-  //             ResourceRecordSet: {
-  //               Name: recordName,
-  //               Type: "A",
-  //               AliasTarget: {
-  //                 DNSName: aliasTarget.DNSName,
-  //                 EvaluateTargetHealth: aliasTarget.EvaluateTargetHealth,
-  //                 HostedZoneId: aliasTarget.HostedZoneId,
-  //               },
-  //             },
-  //           },
-  //         ],
-  //       },
-  //     };
-  //     return await this.route53.changeResourceRecordSets(params).promise();
-  //   } catch (err) {
-  //     return err;
-  //   }
-  // }
+      const params = {
+        HostedZoneId: hostedZoneId,
+        ChangeBatch: {
+          Changes: [
+            {
+              Action: "CREATE",
+              ResourceRecordSet: {
+                Name: recordName,
+                Type: "A",
+                AliasTarget: {
+                  HostedZoneId: hostedZoneId,
+                  DNSName: process.env.AWS_LOAD_BALANCER_NAME,
+                  EvaluateTargetHealth: false,
+                },
+              },
+            },
+          ],
+        },
+      };
+      return await this.route53.changeResourceRecordSets(params).promise();
+    } catch (err) {
+      return err;
+    }
+  }
 
   async getAllRecordsInHostedZone(domainName) {
     try {
