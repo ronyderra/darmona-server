@@ -30,18 +30,5 @@ class CertificateManager {
     }
   }
 }
-// Export a single instance of the class
+
 export const acmManager = new CertificateManager();
-
-// // Example usage:
-// const certificateManager = new CertificateManager("us-west-2");
-// const domains = ["example.com", "www.example.com"];
-
-// certificateManager
-//   .requestCertificateForDomains(domains)
-//   .then((certificateArn) => {
-//     console.log("Requested certificate with ARN:", certificateArn);
-//   })
-//   .catch((error) => {
-//     console.error("Error:", error);
-//   });
