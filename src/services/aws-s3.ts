@@ -56,6 +56,9 @@ class S3FileManager {
                 existingJson[key] = newData[key];
               }
             }
+            if (newData?.hasOwnProperty("is_tpl")) {
+              existingJson["is_tpl"] = newData["is_tpl"];
+            }
             const updatedJsonData = JSON.stringify(existingJson);
             const putParams = {
               Bucket: this.Bucket,

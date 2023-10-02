@@ -57,6 +57,12 @@ const updateCmp = async (req: Request, res: Response) => {
   }
   if (req.body.dc_ep) {
     file.dc_ep = decodeURI(req.body.dc_ep);
+    if (req.body.dc_ep?.includes(".html")) {
+      console.log("got here");
+      file.is_tpl = true;
+    } else {
+      file.is_tpl = false;
+    }
   }
   if (req.body.query_map) {
     file.query_map = req.body.query_map;
@@ -70,6 +76,7 @@ const updateCmp = async (req: Request, res: Response) => {
       };
     });
   }
+  console.log(file);
 
   const resp = await s3FileManager.updateFile(cmp.cmpId, file);
   return res.status(200).json(resp);
