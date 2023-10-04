@@ -49,14 +49,14 @@ class NameCom {
   }
   async setNameservers(domainName: string, nameservers: string[]) {
     try {
-      const data = { nameservers };
+      const data = JSON.stringify({ nameservers });
       const resp = await axios.post(this.NAME_BASEURL + `/domains/${domainName}:setNameservers`, data, {
         auth: this.auth,
         headers: this.headers,
       });
       return resp.data;
     } catch (err) {
-      console.log(err.message);
+      console.log(err);
       return err;
     }
   }

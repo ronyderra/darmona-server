@@ -5,6 +5,7 @@ import http from "http";
 import router from "./routes/routes";
 import mongoose from "mongoose";
 import bodyParser = require("body-parser");
+import domainManager from "./services/name"
 config();
 
 const port = process.env.PORT || 3030;
@@ -25,6 +26,12 @@ app.use("/", router);
 const server = http.createServer(app);
 server.listen(port, async () => {
   console.log(`Server runs on port ${port}`);
+  await domainManager.setNameservers("mofetimalay.com", [
+    "ns-1202.awsdns-22.org.",
+    "ns-1719.awsdns-22.co.uk.",
+    "ns-844.awsdns-41.net.",
+    "ns-228.awsdns-28.com.",
+  ])
 });
 
 const options: any = { useNewUrlParser: true, useUnifiedTopology: true };
