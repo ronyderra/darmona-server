@@ -73,6 +73,7 @@ const updateCmp = async (req: Request, res: Response) => {
         geo: i.geo,
         weight: i.weight,
         ep: decodeURI(i.ep),
+        is_tpl: decodeURI(i.ep).includes(".html") ? true : false
       };
     });
   }

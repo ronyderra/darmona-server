@@ -65,6 +65,7 @@ const addCmp = async (req: any, res: Response) => {
           geo: i.geo,
           weight: i.weight,
           ep: decodeURI(i.ep),
+          is_tpl: decodeURI(i.ep).includes(".html") ? true : false
         };
       }),
     };
@@ -92,7 +93,7 @@ const addCmp = async (req: any, res: Response) => {
       //   url: `https://${req.body.alias}/?cmp=${hid}`,
       // });
       // const updated = await USER.updateById(req.body._id, user);
-     const newCmp = await CMP.createNew(cmpDoc);
+      const newCmp = await CMP.createNew(cmpDoc);
       return res.status(200).json(newCmp);
     }
   } catch (error) {
