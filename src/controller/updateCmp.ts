@@ -64,9 +64,6 @@ const updateCmp = async (req: Request, res: Response) => {
       file.is_tpl = false;
     }
   }
-  if (req.body.query_map) {
-    file.query_map = req.body.query_map;
-  }
   if (req.body.eps) {
     file.eps = req.body.eps.map(i => {
       return {
@@ -76,6 +73,12 @@ const updateCmp = async (req: Request, res: Response) => {
         is_tpl: decodeURI(i.ep).includes(".html") ? true : false
       };
     });
+  }
+  if (req.body.query) {
+    file.query = req.body.query;
+  }
+  if (req.body.query_map) {
+    file.query_map = req.body.query_map;
   }
   console.log(file);
 

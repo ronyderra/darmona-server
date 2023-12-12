@@ -91,12 +91,10 @@ export class UserController {
       this.bodyValidations["url"],
       this.bodyValidations["imp_optional"],
       this.bodyValidations["ctype_optional"],
-      this.bodyValidations["query_optional"],
       this.bodyValidations["alias_optional"],
       this.bodyValidations["ip_optional"],
       this.bodyValidations["track_optional"],
       this.bodyValidations["dc_ep_optional"],
-      this.bodyValidations["query_map_optional"],
       this.bodyValidations["eps_optional"],
     ];
   }
