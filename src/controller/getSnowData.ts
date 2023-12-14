@@ -28,7 +28,7 @@ export const getRows = async (req: Request, res: Response) => {
     console.log(resp.slice(0, 100));
     return;
   }
-  console.log(resp);
+  // console.log(resp);
 
   return res.status(200).json({ resp });
 };

@@ -80,7 +80,7 @@ class SnowManager {
     try {
       return new Promise((resolve, reject) => {
         this.snowConnect.execute({
-          sqlText: `SELECT * FROM fire_sys.public.events as a left join fire_sys.public.skip_reasons_list as b on a.sr = b.id where DATE(ts) between '${from}' and '${to}' and event = 'tracked traffic' and cmp='${cmp}' ;`,
+          sqlText: `SELECT * FROM fire_sys.public.events as a left join fire_sys.public.skip_reasons_list as b on a.sr = b.id where DATE(ts) between '${from}' and '${to}' and event = 'tracked traffic' and cmp='${cmp}' ORDER BY ts DESC;`,
           complete: function (err, stmt, rows) {
             if (err) {
               console.error(
