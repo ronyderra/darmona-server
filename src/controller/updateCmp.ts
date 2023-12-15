@@ -68,7 +68,7 @@ const updateCmp = async (req: Request, res: Response) => {
     file.eps = req.body.eps.map(i => {
       return {
         geo: i.geo,
-        weight: i.weight,
+        weight: Number(i.weight),
         ep: decodeURI(i.ep),
         is_tpl: decodeURI(i.ep).includes(".html") ? true : false
       };
