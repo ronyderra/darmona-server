@@ -28,7 +28,16 @@ schema.statics.findCmp = async function findCmp(cmpId: string) {
 
 schema.statics.getCmpsByUser = async function getCmpsByUser(userId: ObjectId) {
   try {
-    const query = this.find({ userId }).sort({createdAt:-1});
+    const query = this.find({ userId }).sort({ createdAt: -1 });
+    return query.exec().then((doc: any) => doc);
+  } catch (error: any) {
+    console.log(error.message);
+    return undefined;
+  }
+};
+schema.statics.getCmpsByStatus = async function getCmpsByStatus(userId: ObjectId, status) {
+  try {
+    const query = this.find({ userId, status }).sort({ createdAt: -1 });
     return query.exec().then((doc: any) => doc);
   } catch (error: any) {
     console.log(error.message);

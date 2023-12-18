@@ -15,7 +15,7 @@ import { config } from "dotenv";
 import { validateBearerToken } from "./validation";
 import { getBlackPagesV2, getGeos, getCharactersV2 } from "../controller/getBlackPagesV2";
 import { uploadImg } from "../controller/uploadImg";
-import { bycmpId } from "../controller/cmps/bycmpId";
+import { bycmpId, getCmpsByStatus } from "../controller/cmps/bycmpId";
 import { handleNewPrelander } from "../controller/lambda/prelanders";
 import { handleNewWhitePage } from "../controller/lambda/whitePages";
 import { updateCmpDoc } from "../controller/cmps/updateCmpDoc";
@@ -46,7 +46,7 @@ router.get("/countByDateAndParam", validateBearerToken, validate.countByDateAndP
 router.get("/getrows", validateBearerToken, validate.getSnowData(), getRows);
 
 router.post("/getTrkAnalytics", getTrkAnalytics);
-router.get("/getTrkAnalyticsUser", getUser);
+router.get("/getTrkAnalyticsCmps", getCmpsByStatus);
 
 router.get("/whitePage", validateBearerToken, getWhitePage);
 router.get("/getWhitePageHtmlType", validateBearerToken, getWhitePageHtmlType);
