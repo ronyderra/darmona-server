@@ -46,6 +46,7 @@ router.get("/countByDateAndParam", validateBearerToken, validate.countByDateAndP
 router.get("/getrows", validateBearerToken, validate.getSnowData(), getRows);
 
 router.post("/getTrkAnalytics", getTrkAnalytics);
+router.get("/getTrkAnalyticsUser", getUser);
 
 router.get("/whitePage", validateBearerToken, getWhitePage);
 router.get("/getWhitePageHtmlType", validateBearerToken, getWhitePageHtmlType);
