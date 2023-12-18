@@ -168,6 +168,43 @@ class SnowManager {
       throw err;
     }
   }
+  
+  async trkAnalytics(cmps: string[]): Promise<any[]> {
+    try {
+      const placeholders = cmps.map(() => '?').join(', ');
+      const sqlText = `
+        SELECT
+          cmp,
+          COUNT(CASE WHEN event = 'tracked traffic' THEN 1 END) AS total_clicks,
+          COUNT(CASE WHEN event = 'tracked traffic' AND skip = false THEN 1 END) AS got_to_bp,
+          COUNT(CASE WHEN event = 'tracked traffic' AND skip = true THEN 1 END) AS got_to_wp,
+          COUNT(CASE WHEN event LIKE 'event:lpclick' THEN 1 END) AS clicked_on_bp
+        FROM
+          fire_sys.public.events
+        WHERE
+          cmp IN (${placeholders}) 
+          AND (event = 'tracked traffic' OR event LIKE 'event:lpclick')
+        GROUP BY
+          cmp;`;
+  
+      return new Promise((resolve, reject) => {
+        this.snowConnect.execute({
+          sqlText: sqlText,
+          binds: cmps,
+          complete: function (err, stmt, rows) {
+            if (err) {
+              console.error("Failed to execute statement due to the following error: " + err.message);
+              reject(err);
+            } else {
+              resolve(rows);
+            }
+          },
+        });
+      });
+    } catch (err) {
+      throw err;
+    }
+  }
 }
 
 const snowManager = new SnowManager();

@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import snowManager from "../services/snow";
 import { validationResult } from "express-validator";
+import CMP from "../models/cmps";
 
 export const getSnowData = async (req: Request, res: Response) => {
   const errors = validationResult(req);
@@ -14,7 +15,6 @@ export const getSnowData = async (req: Request, res: Response) => {
 
   return res.status(200).json({ resp });
 };
-
 export const getRows = async (req: Request, res: Response) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
@@ -40,4 +40,19 @@ export const countByDateAndParam = async (req: Request, res: Response) => {
   const resp = await snowManager.countByDateAndParam(from, to, by, sort);
   // console.log(resp);
   return res.status(200).json({ resp });
+};
+export const getTrkAnalytics = async (req: any, res: Response) => {
+  const { cmps } = req.body;
+  if (!cmps) {
+    return res.status(400).send("must send cmps");
+  }
+  const resp = await snowManager.trkAnalytics(cmps);
+  for (let index = 0; index < resp.length; index++) {
+    const id = resp[index].CMP;
+    const result = await CMP.findCmp(String(id));
+    resp[index].CMP_NAME = result.cmpName
+    resp[index].USER = result.user
+    resp[index].DOMAIN = result.domain
+  }
+  return res.status(200).json(resp);
 };
