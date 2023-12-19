@@ -168,8 +168,8 @@ class SnowManager {
       throw err;
     }
   }
-  
-  async trkAnalytics(cmps: string[]): Promise<any[]> {
+
+  async trkAnalytics(cmps: string[], dateFrom: string, dateTo: string): Promise<any[]> {
     try {
       const placeholders = cmps.map(() => '?').join(', ');
       const sqlText = `
@@ -184,9 +184,10 @@ class SnowManager {
         WHERE
           cmp IN (${placeholders}) 
           AND (event = 'tracked traffic' OR event LIKE 'event:lpclick')
+          AND DATE(ts) BETWEEN '${dateFrom}' and '${dateTo}'
         GROUP BY
           cmp;`;
-  
+
       return new Promise((resolve, reject) => {
         this.snowConnect.execute({
           sqlText: sqlText,
