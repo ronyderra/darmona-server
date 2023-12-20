@@ -43,11 +43,8 @@ export const countByDateAndParam = async (req: Request, res: Response) => {
 };
 export const getTrkAnalytics = async (req: any, res: Response) => {
   const { cmps, dateFrom, dateTo } = req.body;
-  console.log(req.body);
 
-  console.log({ dateFrom, dateTo });
-
-  if (!cmps || !dateFrom || !dateTo) {
+  if (!cmps || cmps.length < 1 || !dateFrom || !dateTo) {
     return res.status(400).send("must send cmps");
   }
   const resp = await snowManager.trkAnalytics(cmps, String(dateFrom), String(dateTo));
