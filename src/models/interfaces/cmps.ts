@@ -9,6 +9,7 @@ export interface ICMP {
   cmpId: string;
   status: string;
   domain: string;
+  geo: [];
 }
 
 export interface ICMPDocument extends ICMP, Document {

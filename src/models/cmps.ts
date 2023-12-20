@@ -11,6 +11,7 @@ export const docCMP = {
   cmpId: { type: String },
   status: { type: String },
   domain: { type: String },
+  geo: { type: [], default: [] },
   createdAt: { type: Date },
 };
 
