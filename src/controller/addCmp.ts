@@ -82,6 +82,7 @@ const addCmp = async (req: any, res: Response) => {
       status: "new",
       cmpId: hid,
       domain: req.body.alias,
+      geo: req.body.eps.map(i => i.geo),
     };
 
     const file = await s3FileManager.createFile(hid, json);
