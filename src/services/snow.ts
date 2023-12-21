@@ -169,12 +169,12 @@ class SnowManager {
     }
   }
 
-  async trkAnalytics(cmps: string[], dateFrom: string, dateTo: string): Promise<any[]> {
+  async trkAnalytics(cmps: string[], dateFrom: string, dateTo: string, groupBy = "cmp"): Promise<any[]> {
     try {
       const placeholders = cmps.map(() => '?').join(', ');
       const sqlText = `
         SELECT
-          cmp,
+          ${groupBy},
           COUNT(CASE WHEN event = 'tracked traffic' THEN 1 END) AS total_clicks,
           COUNT(CASE WHEN event = 'tracked traffic' AND skip = false THEN 1 END) AS got_to_bp,
           COUNT(CASE WHEN event = 'tracked traffic' AND skip = true THEN 1 END) AS got_to_wp,
@@ -186,7 +186,7 @@ class SnowManager {
           AND (event = 'tracked traffic' OR event LIKE 'event:lpclick')
           AND DATE(ts) BETWEEN '${dateFrom}' and '${dateTo}'
         GROUP BY
-          cmp;`;
+        ${groupBy};`;
 
       return new Promise((resolve, reject) => {
         this.snowConnect.execute({
