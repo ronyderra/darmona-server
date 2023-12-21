@@ -24,7 +24,7 @@ class S3FileManager {
     }
   }
 
-  async getFile(id) {
+  async getFile(id) { 
     try {
       const obj = await this.s3
         .getObject({
