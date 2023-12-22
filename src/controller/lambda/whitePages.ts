@@ -5,11 +5,9 @@ import BLACKPAGE from "../../models/blackPage";
 export const handleNewWhitePage = async (req: Request, res: Response) => {
   try {
     const { key } = req.query;
-    console.log("New page in templates: ", { key });
     res.status(200).send(key);
 
     const keySplit = String(key).split("/");
-
     switch (true) {
       case String(key).includes("btl_prelanders/"):
         const bp = await BLACKPAGE.getBlackPageByKey(String(key).replace("templates/", ""));
@@ -26,7 +24,7 @@ export const handleNewWhitePage = async (req: Request, res: Response) => {
           });
         }
         break;
-      case String(key).includes("panels/"):
+      default:
         const docs = await WHITE_PAGES.getWhitePageByKey(String(key).replace("templates/", ""));
         if (!docs) {
           const doc: IWHITEPAGE = {
@@ -40,35 +38,7 @@ export const handleNewWhitePage = async (req: Request, res: Response) => {
           console.log({ result });
         }
         break;
-      case String(key).includes("white_pages/"):
-        const doc: IWHITEPAGE = {
-          language: keySplit[4],
-          topic: keySplit[1],
-          link: String(key).replace("templates/", ""),
-          domain: "any",
-          linkType: "html",
-        };
-        const result = await WHITE_PAGES.createNew(doc);
-        console.log({ result });
-        break;
-      default:
-        break;
     }
-
-    // const docs = await WHITE_PAGES.getWhitePageByKey(String(key).replace("templates/", ""));
-    // if (!docs) {
-    //   const doc: IWHITEPAGE = {
-    //     language: keySplit[1],
-    //     topic: keySplit[2],
-    //     link: String(key).replace("templates/", ""),
-    //     domain: "any",
-    //     linkType: "html",
-    //   };
-    //   const result = await WHITE_PAGES.createNew(doc);
-    //   console.log({ result });
-    // } else {
-    //   console.log("Wite page exists: ", key);
-    // }
     return;
   } catch (error) {
     console.log("error in handleNewWhitePage: ", error.message);
