@@ -6,6 +6,11 @@ import s3FileManager from "../services/aws-s3";
 import CMP from "../models/cmps";
 import { ObjectId } from "mongodb";
 
+function extractUniqueGeos(data): any[] {
+  const allGeos = data.flatMap(item => item.geo.grp);
+  return Array.from(new Set(allGeos));
+}
+
 const updateCmp = async (req: Request, res: Response) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
@@ -73,6 +78,9 @@ const updateCmp = async (req: Request, res: Response) => {
         is_tpl: decodeURI(i.ep).includes(".html") ? true : false
       };
     });
+    const gs = extractUniqueGeos(req.body.eps)
+    cmp.geo = gs;
+    await CMP.updateById(cmp._id, cmp);
   }
   if (req.body.query) {
     file.query = req.body.query;
