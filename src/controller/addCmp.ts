@@ -7,6 +7,11 @@ import { FULL_CMP_JSON } from "../models/interfaces/cmpJson";
 import { validationResult } from "express-validator";
 import CMP, { ICMP } from "../models/cmps";
 
+function extractUniqueGeos(data): any[] {
+  const allGeos = data.flatMap(item => item.geo.grp);
+  return Array.from(new Set(allGeos));
+}
+
 const addCmp = async (req: any, res: Response) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
@@ -74,6 +79,8 @@ const addCmp = async (req: any, res: Response) => {
       json.is_tpl = true;
     }
 
+    const geos = extractUniqueGeos(req.body.eps)
+
     const cmpDoc: ICMP = {
       userId: new ObjectId(user?._id),
       user: user?.username,
@@ -82,7 +89,7 @@ const addCmp = async (req: any, res: Response) => {
       status: "new",
       cmpId: hid,
       domain: req.body.alias,
-      geo: req.body.eps.map(i => i.geo),
+      geo: geos
     };
 
     const file = await s3FileManager.createFile(hid, json);
