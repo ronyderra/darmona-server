@@ -16,6 +16,7 @@ export interface IBLACKPAGEDocument extends IBLACKPAGE, Document {
 }
 export interface IBLACKPAGEModel extends Model<IBLACKPAGEDocument> {
   createNew(data: IBLACKPAGE): Promise<IBLACKPAGEDocument>;
+  getBlackPageByKey(link: string): Promise<IBLACKPAGEDocument>;
   getBlackPage(version: string, geo: string, celeb: string | undefined): Promise<IBLACKPAGEDocument[]>;
   getGeos(version: string): Promise<IBLACKPAGEDocument[]>;
   getCharactersV2(version: string, geo: string): Promise<IBLACKPAGEDocument[]>;

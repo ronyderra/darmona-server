@@ -12,16 +12,19 @@ export const handleNewWhitePage = async (req: Request, res: Response) => {
 
     switch (true) {
       case String(key).includes("btl_prelanders/"):
-        await BLACKPAGE.createNew({
-          version: "html",
-          geo: keySplit[2],
-          lang: keySplit[3],
-          template: keySplit[4],
-          celeb: keySplit[5],
-          offerPage: keySplit[6],
-          stagingLink: String(key).split("templates/")[1],
-          productionLink: String(key).split("templates/")[1],
-        });
+        const bp = await BLACKPAGE.getBlackPageByKey(String(key).replace("templates/", ""));
+        if (!bp) {
+          await BLACKPAGE.createNew({
+            version: "html",
+            geo: keySplit[2],
+            lang: keySplit[3],
+            template: keySplit[4],
+            celeb: keySplit[5],
+            offerPage: keySplit[6],
+            stagingLink: String(key).split("templates/")[1],
+            productionLink: String(key).split("templates/")[1],
+          });
+        }
         break;
       case String(key).includes("panels/"):
         const docs = await WHITE_PAGES.getWhitePageByKey(String(key).replace("templates/", ""));

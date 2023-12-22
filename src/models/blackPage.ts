@@ -66,6 +66,16 @@ schema.statics.getBlackPage = async function getBlackPage(
   }
 };
 
+schema.statics.getBlackPageByKey = async function getBlackPageByKey(link: string) {
+  try {
+    const query = this.findOne({ productionLink: link }).sort({ language: 1 });
+    return query.exec().then((doc: any) => doc);
+  } catch (error: any) {
+    console.log(error.message);
+    return undefined;
+  }
+};
+
 const BLACKPAGE: IBLACKPAGEModel = model<IBLACKPAGEDocument, IBLACKPAGEModel>(
   "black_pages",
   schema
