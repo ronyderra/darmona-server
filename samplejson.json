@@ -1,38 +1,88 @@
 {
-    "id": 999999999999999,
-    "hid": "3eca5d72-0490-4102-8186-e49b52a66579",
-    "imp": { "count": 1, "recurring": true },
-    "ctype": "url",
-    "query": {
-      "keyword": { "type": "pattern", "cmp": "^[0-9a-zA-z.-_,/ ]+$" },
-      "adid": { "type": "pattern", "cmp": "^[0-9]+$" },
-      "msclkid": { "type": "pattern", "cmp": "^[0-9a-zA-z]+$" },
-      "matchtype": { "type": "pattern", "cmp": "^[a-zA-z]{1,3}$" },
-      "device": { "type": "pattern", "cmp": "^[0-9a-zA-z]+$" },
-      "targetid": { "type": "pattern", "cmp": "^[0-9a-zA-z-:]+$" },
-      "network": { "type": "pattern", "cmp": "^[a-zA-z]{1,3}$" },
-      "campaignid": { "type": "pattern", "cmp": "^[0-9]+$" }
-    },
-    "alias": "trak.blazefast.net",
-    "ip": true,
-    "track": true,
-    "dc_ep": "https://www.yahoo.com/entertainment/elon-musk-reveals-plan-fold-215308422.html?id={{CAMPAIGNID}}&channel={{TARGETID}}&clck={{MSCLKID}}",
-    "query_map": {
-      "sub1": "keyword",
-      "sub2": "adid",
-      "sub3": "msclkid",
-      "sub4": "matchtype",
-      "sub5": "device",
-      "sub6": "targetid",
-      "sub7": "network",
-      "sub8": "campaignid"
-    },
-    "eps": [
-      {
-        "geo": { "grp": ["CA"], "bl": false },
-        "weight": 1,
-        "ep": "https://givemes.com/click?trvid=10006&campaignid={{CAMPAIGNID}}&targetid={{TARGETID}}&matchtype={{MATCHTYPE}}&network={{NETWORK}}&device={{DEVICE}}&adid={{ADID}}&keyword={{KEYWORD}}&msclkid={{MSCLKID}}&querystring=bravo&feeditemid=john"
+  "id": 325,
+  "hid": "2cc71d34-419d-498f-80bf-1b0a1141c54b",
+  "alias": "seek.mofetimalay.com",
+  "platformName": "Facebook",
+  "imp": {
+      "count": 1,
+      "recurring": true
+  },
+  "dc_ep_name": "wp name",
+  "dc_ep": "btl_prelanders/au/en/news/elon_musk/quantum_ai/news.html",
+  "ctype": "url",
+  "ip": true,
+  "track": true,
+  "query": {
+      "site_source_name": {
+          "type": "pattern",
+          "cmp": "^[a-z]+$"
+      },
+      "adset_name": {
+          "type": "pattern",
+          "cmp": "^[a-zA-Z0-9+_ ]+$"
+      },
+      "ad_name": {
+          "type": "pattern",
+          "cmp": "^[a-zA-Z0-9+_ ]+$"
+      },
+      "campaign_name": {
+          "type": "pattern",
+          "cmp": "^[a-zA-Z0-9+_ ]+$"
+      },
+      "campaign_id": {
+          "type": "pattern",
+          "cmp": "^[0-9]+$"
+      },
+      "ad_id": {
+          "type": "pattern",
+          "cmp": "^[0-9]+$"
+      },
+      "placement": {
+          "type": "pattern",
+          "cmp": "^[a-zA-Z0-9_]+$"
+      },
+      "adset_id": {
+          "type": "pattern",
+          "cmp": "^[0-9]+$"
       }
-    ]
-  }
-  
+  },
+  "query_map": {
+      "sub1": "site_source_name",
+      "sub2": "adset_name",
+      "sub3": "campaign_id",
+      "sub4": "ad_id",
+      "sub5": "campaign_name",
+      "sub6": "placement",
+      "sub7": "ad_name",
+      "sub8": "adset_id"
+  },
+  "eps": [
+      {
+          "geo": {
+              "grp": [
+                  "AF"
+              ],
+              "bl": false
+          },
+          "weight": 3,
+          "epName": "bp name",
+          "ep": "btl_prelanders/au/en/news/elon_musk/quantum_ai/news.html",
+          "is_tpl": true
+      },
+      {
+          "geo": {
+              "grp": [
+                  "AR",
+                  "AR",
+                  "AU"
+              ],
+              "bl": false
+          },
+          "weight": 1,
+          "epName": "bp path2 name",
+          "ep": "btl_prelanders/au/en/news/elon_musk/quantum_ai/news.html",
+          "is_tpl": true
+      }
+  ],
+  "is_tpl": true
+}
