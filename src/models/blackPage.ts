@@ -54,11 +54,21 @@ schema.statics.getGeos = async function getGeosByVersion(version: string) {
 
 schema.statics.getBlackPage = async function getBlackPage(
   version: string,
-  geo: string,
+  geo: string | undefined,
   celeb: string | undefined
 ) {
   try {
-    const query = this.find({ version, geo, celeb });
+
+    let queryObj: any = { version };
+    if (celeb !== "undefined") {
+      queryObj.celeb = celeb;
+    }
+    if (geo !== "undefined") {
+      queryObj.geo = celeb;
+    }
+    console.log(queryObj);
+
+    const query = this.find(queryObj);
     return query.exec().then((doc: any) => doc);
   } catch (error: any) {
     console.log(error.message);
