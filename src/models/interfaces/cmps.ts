@@ -6,8 +6,8 @@ export interface ICMP {
   user: string;
   cmpName: string;
   platformName: string;
-  wpName: string;
-  wpPath: string;
+  dc_ep_name: string;
+  dc_ep: string;
   ip: boolean;
   track: boolean;
   ctype: string;
