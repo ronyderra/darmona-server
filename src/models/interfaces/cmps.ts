@@ -5,11 +5,18 @@ export interface ICMP {
   userId: ObjectId;
   user: string;
   cmpName: string;
+  platformName: string;
+  wpName: string;
+  wpPath: string;
+  ip: boolean;
+  track: boolean;
+  ctype: string;
   cmpUrl: string;
   cmpId: string;
   status: string;
   domain: string;
   geo: any[];
+  eps: any[];
 }
 
 export interface ICMPDocument extends ICMP, Document {

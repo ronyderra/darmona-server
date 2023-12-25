@@ -25,7 +25,7 @@ const addCmp = async (req: any, res: Response) => {
     return res.status(400).send("user not found");
   }
 
-  const { imp, ctype, query, alias, ip, track, dc_ep, query_map, eps } = req.body;
+  const { imp, ctype, query, alias, ip, track, dc_ep, query_map, eps, platformName, dc_ep_name } = req.body;
 
   if (!alias || alias === "") {
     return res.status(404).send("you muust send an alias");
@@ -57,18 +57,21 @@ const addCmp = async (req: any, res: Response) => {
     const json: FULL_CMP_JSON = {
       id: Number(id),
       hid,
-      imp: req.body.imp,
-      ctype: req.body.ctype,
-      query: req.body.query,
       alias: req.body.alias,
+      platformName,
+      imp: req.body.imp,
+      dc_ep_name,
+      dc_ep: decodeURI(req.body.dc_ep),
+      ctype: req.body.ctype,
       ip: Boolean(req.body.ip),
       track: Boolean(req.body.track),
-      dc_ep: decodeURI(req.body.dc_ep),
+      query: req.body.query,
       query_map: req.body.query_map,
       eps: req.body.eps.map(i => {
         return {
           geo: i.geo,
           weight: i.weight,
+          epName: i.epName,
           ep: decodeURI(i.ep),
           is_tpl: decodeURI(i.ep).includes(".html") ? true : false
         };
@@ -85,22 +88,32 @@ const addCmp = async (req: any, res: Response) => {
       userId: new ObjectId(user?._id),
       user: user?.username,
       cmpName: req.body.name,
+      platformName,
+      wpName: dc_ep_name,
+      wpPath: decodeURI(req.body.dc_ep),
+      ctype: req.body.ctype,
+      ip: Boolean(req.body.ip),
+      track: Boolean(req.body.track),
       cmpUrl: `https://${req.body.alias}/?cmp=${hid}`,
       status: "new",
       cmpId: hid,
       domain: req.body.alias,
-      geo: geos
+      geo: geos,
+      eps: req.body.eps.map(i => {
+        return {
+          geo: i.geo,
+          weight: i.weight,
+          epName: i.epName,
+          ep: decodeURI(i.ep),
+          is_tpl: decodeURI(i.ep).includes(".html") ? true : false
+        };
+      }),
     };
 
     const file = await s3FileManager.createFile(hid, json);
     console.log("CREATED NEW JSON", file);
     if (file) {
       await USER.incrementCount();
-      // user.cmps.push({
-      //   name: req.body.name,
-      //   url: `https://${req.body.alias}/?cmp=${hid}`,
-      // });
-      // const updated = await USER.updateById(req.body._id, user);
       const newCmp = await CMP.createNew(cmpDoc);
       return res.status(200).json(newCmp);
     }

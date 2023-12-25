@@ -7,11 +7,18 @@ export const docCMP = {
   userId: { type: ObjectId },
   user: { type: String },
   cmpName: { type: String },
+  platformName: { type: String },
+  wpName: { type: String },
+  wpPath: { type: String },
+  ctype: { type: String },
+  ip: { type: Boolean },
+  track: { type: Boolean },
   cmpUrl: { type: String },
   cmpId: { type: String },
   status: { type: String },
   domain: { type: String },
   geo: { type: [], default: [] },
+  eps: { type: [], default: [] },
   createdAt: { type: Date },
 };
 
