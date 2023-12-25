@@ -178,12 +178,13 @@ class SnowManager {
           COUNT(CASE WHEN event = 'tracked traffic' THEN 1 END) AS total_clicks,
           COUNT(CASE WHEN event = 'tracked traffic' AND skip = false THEN 1 END) AS got_to_bp,
           COUNT(CASE WHEN event = 'tracked traffic' AND skip = true THEN 1 END) AS got_to_wp,
-          COUNT(CASE WHEN event LIKE 'event:lpclick' THEN 1 END) AS clicked_on_bp
+          COUNT(CASE WHEN event LIKE 'event:lpclick' THEN 1 END) AS clicked_on_bp,
+          COUNT(CASE WHEN event = 'event:conv' THEN 1 END) AS conv
         FROM
           fire_sys.public.events
         WHERE
           cmp IN (${placeholders}) 
-          AND (event = 'tracked traffic' OR event LIKE 'event:lpclick')
+          AND (event = 'tracked traffic' OR event LIKE 'event:lpclick' OR event LIKE 'event:conv')
           AND DATE(ts) BETWEEN '${dateFrom}' and '${dateTo}'
         GROUP BY
         ${groupBy};`;
