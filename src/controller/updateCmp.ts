@@ -148,7 +148,7 @@ const updateCmp = async (req: Request, res: Response) => {
     const updateFields = ['name', 'status', 'dc_ep_name', 'dc_ep', 'platformName', "eps"];
     updateFields.forEach(field => {
       if (field in req.body) {
-        if (cmp[field] === "eps") {
+        if (field === "eps") {
           cmp[field] = req.body[field].map(i => ({
             geo: i.geo,
             weight: Number(i.weight),
@@ -182,6 +182,8 @@ const updateCmp = async (req: Request, res: Response) => {
             ep: decodeURI(i.ep),
             is_tpl: decodeURI(i.ep).includes(".html")
           }));
+        } else if (field === "imp" || field === "query" || field === "query_map") {
+          file[field] = req.body[field];
         } else {
           file[field] = decodeURI(req.body[field]);
         }
