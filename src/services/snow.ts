@@ -179,9 +179,14 @@ class SnowManager {
           COUNT(CASE WHEN event = 'tracked traffic' AND skip = false THEN 1 END) AS got_to_bp,
           COUNT(CASE WHEN event = 'tracked traffic' AND skip = true THEN 1 END) AS got_to_wp,
           COUNT(CASE WHEN event LIKE 'event:lpclick' THEN 1 END) AS clicked_on_bp,
+          COUNT(CASE WHEN event = 'tracked traffic' AND skip = true  AND reason ='query rules skip' THEN 1 END) AS query_rules_skip,
+          COUNT(CASE WHEN event = 'tracked traffic' AND skip = true  AND reason ='ip blocked' THEN 1 END) AS ip_blocked,
+          COUNT(CASE WHEN event = 'tracked traffic' AND skip = true  AND reason ='first impressions skip' THEN 1 END) AS first_impressions_skip,
+          COUNT(CASE WHEN event = 'tracked traffic' AND skip = true  AND reason ='no endpoint to deliver' THEN 1 END) AS no_endpoint_to_deliver,
           COUNT(CASE WHEN event = 'event:conv' THEN 1 END) AS conv
-        FROM
-          fire_sys.public.events
+       FROM fire_sys.public.events 
+          as a left join fire_sys.public.skip_reasons_list 
+          as b on a.sr = b.id 
         WHERE
           cmp IN (${placeholders}) 
           AND (event = 'tracked traffic' OR event LIKE 'event:lpclick' OR event LIKE 'event:conv')
