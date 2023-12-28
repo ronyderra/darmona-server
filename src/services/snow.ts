@@ -169,12 +169,19 @@ class SnowManager {
     }
   }
 
-  async trkAnalytics(cmps: string[], dateFrom: string, dateTo: string, groupBy = "cmp"): Promise<any[]> {
+  async trkAnalytics(
+    cmps: string[],
+    dateFrom: string,
+    dateTo: string,
+    groupBy: string[] = ["cmp"]
+  ): Promise<any[]> {
     try {
       const placeholders = cmps.map(() => '?').join(', ');
+      const groupByClause = groupBy.join(', ');
+
       const sqlText = `
         SELECT
-          ${groupBy},
+          ${groupByClause},
           COUNT(CASE WHEN event = 'tracked traffic' THEN 1 END) AS total_clicks,
           COUNT(CASE WHEN event = 'tracked traffic' AND skip = false THEN 1 END) AS got_to_bp,
           COUNT(CASE WHEN event = 'tracked traffic' AND skip = true THEN 1 END) AS got_to_wp,
@@ -184,15 +191,15 @@ class SnowManager {
           COUNT(CASE WHEN event = 'tracked traffic' AND skip = true  AND reason ='first impressions skip' THEN 1 END) AS first_impressions_skip,
           COUNT(CASE WHEN event = 'tracked traffic' AND skip = true  AND reason ='no endpoint to deliver' THEN 1 END) AS no_endpoint_to_deliver,
           COUNT(CASE WHEN event = 'event:conv' THEN 1 END) AS conv
-       FROM fire_sys.public.events 
-          as a left join fire_sys.public.skip_reasons_list 
-          as b on a.sr = b.id 
+        FROM fire_sys.public.events as a
+        LEFT JOIN fire_sys.public.skip_reasons_list as b ON a.sr = b.id
         WHERE
-          cmp IN (${placeholders}) 
+          cmp IN (${placeholders})
           AND (event = 'tracked traffic' OR event LIKE 'event:lpclick' OR event LIKE 'event:conv')
           AND DATE(ts) BETWEEN '${dateFrom}' and '${dateTo}'
-        GROUP BY
-        ${groupBy};`;
+        GROUP BY ${groupByClause};`;
+
+      console.log(sqlText);
 
       return new Promise((resolve, reject) => {
         this.snowConnect.execute({
@@ -209,9 +216,11 @@ class SnowManager {
         });
       });
     } catch (err) {
-      throw err;
+      console.log(err.message);
+      return undefined
     }
   }
+
 }
 
 const snowManager = new SnowManager();
