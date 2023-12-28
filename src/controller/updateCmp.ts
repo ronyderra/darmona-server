@@ -28,7 +28,7 @@ const updateCmp = async (req: Request, res: Response) => {
     }
 
     // Update mongo
-    const updateFields = ['name', 'status', 'dc_ep_name', 'dc_ep', 'platformName', "eps"];
+    const updateFields = ['cmpName', 'status', 'dc_ep_name', 'dc_ep', 'platformName', "eps"];
     updateFields.forEach(field => {
       if (field in req.body) {
         if (field === "eps") {
