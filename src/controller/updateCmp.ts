@@ -68,11 +68,10 @@ const updateCmp = async (req: Request, res: Response) => {
         } else if (field === "imp" || field === "query" || field === "query_map") {
           file[field] = req.body[field];
         } else {
-          file[field] = decodeURI(req.body[field]);
+          file[field] = req.body[field];
         }
       }
     });
-
     const resp = await s3FileManager.updateFile(cmp.cmpId, file);
     return res.status(200).json(resp);
   } catch (error) {

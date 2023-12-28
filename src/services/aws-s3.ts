@@ -59,7 +59,14 @@ class S3FileManager {
             if (newData?.hasOwnProperty("is_tpl")) {
               existingJson["is_tpl"] = newData["is_tpl"];
             }
+            if (newData?.hasOwnProperty("platformName")) {
+              existingJson["platformName"] = newData["platformName"];
+            }
+            if (newData?.hasOwnProperty("dc_ep_name")) {
+              existingJson["dc_ep_name"] = newData["dc_ep_name"];
+            }
             const updatedJsonData = JSON.stringify(existingJson);
+            console.log({updatedJsonData});
             const putParams = {
               Bucket: this.Bucket,
               Key: `campaigns/${id}.json`,
