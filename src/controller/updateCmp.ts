@@ -35,16 +35,18 @@ const updateCmp = async (req: Request, res: Response) => {
           cmp[field] = req.body[field].map(i => ({
             geo: i.geo,
             weight: Number(i.weight),
-            epName: decodeURI(i.epName),
+            epName: i.epName,
             ep: decodeURI(i.ep),
             is_tpl: decodeURI(i.ep).includes(".html")
           }));
         } else {
-          cmp[field] = decodeURI(req.body[field]);
+          cmp[field] = req.body[field];
         }
 
       }
     });
+    console.log({ cmp });
+
     await CMP.updateById(cmp._id, cmp);
 
     // get json
