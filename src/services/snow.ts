@@ -173,11 +173,12 @@ class SnowManager {
     cmps: string[],
     dateFrom: string,
     dateTo: string,
-    groupBy: string[] = ["cmp"]
+    groupBy: string[] = ["cmp"],
+    tz: string = 'America/Mexico_City'
   ): Promise<any[]> {
     try {
-      const placeholders = cmps.map(() => '?').join(', ');
-      const groupByClause = groupBy.join(', ');
+      const placeholders = cmps?.map(() => '?').join(', ');
+      const groupByClause = groupBy?.join(', ');
 
       const sqlText = `
         SELECT
@@ -196,7 +197,7 @@ class SnowManager {
         WHERE
           cmp IN (${placeholders})
           AND (event = 'tracked traffic' OR event LIKE 'event:lpclick' OR event LIKE 'event:conv')
-          AND DATE(ts) BETWEEN '${dateFrom}' and '${dateTo}'
+          AND DATE(CONVERT_TIMEZONE('America/Ensenada', '${tz}', TS)) BETWEEN '${dateFrom}' and '${dateTo}'
         GROUP BY ${groupByClause};`;
 
       console.log(sqlText);
