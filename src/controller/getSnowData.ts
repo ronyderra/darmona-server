@@ -44,7 +44,7 @@ export const countByDateAndParam = async (req: Request, res: Response) => {
 export const getTrkAnalytics = async (req: any, res: Response) => {
   try {
     const { cmps, dateFrom, dateTo, groupBy, tz } = req.body;
-    console.log(tz);
+    console.log({ cmps: cmps.length, dateFrom, dateTo, groupBy, tz });
 
     if (!cmps || cmps.length < 1 || !dateFrom || !dateTo) {
       return res.status(400).send("must send cmps");
