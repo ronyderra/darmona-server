@@ -58,12 +58,15 @@ export const getTrkAnalytics = async (req: any, res: Response) => {
     if (!resp) {
       return res.status(200).send(undefined);
     }
-    for (let index = 0; index < resp.length; index++) {
-      const id = resp[index].CMP;
-      const result = await CMP.findCmp(String(id));
-      resp[index].CMP_NAME = result?.cmpName
-      resp[index].USER = result?.user
-      resp[index].DOMAIN = result?.domain
+    console.log({ resp });
+    // only for tracking page
+    if (resp[0].CMP) {
+      for (let index = 0; index < resp.length; index++) {
+        const id = resp[index].CMP;
+        const result = await CMP.findCmp(String(id));
+        resp[index].CMP_NAME = result?.cmpName
+        resp[index].DOMAIN = result?.domain
+      }
     }
     return res.status(200).json(resp);
   } catch (error) {
