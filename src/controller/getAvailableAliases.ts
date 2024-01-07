@@ -48,7 +48,7 @@ const getAvailableAliases = async (req: Request, res: Response) => {
     }
 
     let available: any;
-    if (userRecords.length > 0) {
+    if (userRecords?.length > 0) {
       available = filterItemsNotInArray(aRecords, userRecords);
     } else {
       available = aRecords;

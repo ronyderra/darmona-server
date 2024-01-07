@@ -10,7 +10,7 @@ import getAvailableAliases from "../controller/getAvailableAliases";
 import updateUser from "../controller/updateUser";
 import updateCmp from "../controller/updateCmp";
 import getCmp from "../controller/getCmp";
-import { getSnowData, getRows, countByDateAndParam, getTrkAnalytics } from "../controller/getSnowData";
+import { getSnowData, getRows, countByDateAndParam, getTrkAnalytics, drillDown } from "../controller/getSnowData";
 import { config } from "dotenv";
 import { validateBearerToken } from "./validation";
 import { getBlackPagesV2, getGeos, getCharactersV2 } from "../controller/getBlackPagesV2";
@@ -46,6 +46,7 @@ router.get("/countByDateAndParam", validateBearerToken, validate.countByDateAndP
 router.get("/getrows", validateBearerToken, validate.getSnowData(), getRows);
 
 router.post("/getTrkAnalytics", validateBearerToken, getTrkAnalytics);
+router.post("/drillDown", validateBearerToken, drillDown);
 router.get("/getTrkAnalyticsCmps", getCmpsByStatus);
 
 router.get("/whitePage", validateBearerToken, getWhitePage);

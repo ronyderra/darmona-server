@@ -181,12 +181,12 @@ class SnowManager {
       const placeholders = cmps?.map(() => '?').join(', ');
       const groupByClause = groupBy?.join(', ');
       let reasonQueryPart = '';
-    if (includeReasons) {
-      reasonQueryPart = `COUNT(CASE WHEN event = 'tracked traffic' AND skip = true AND reason = 'query rules skip' THEN 1 END) AS query_rules_skip,
+      if (includeReasons) {
+        reasonQueryPart = `COUNT(CASE WHEN event = 'tracked traffic' AND skip = true AND reason = 'query rules skip' THEN 1 END) AS query_rules_skip,
         COUNT(CASE WHEN event = 'tracked traffic' AND skip = true AND reason = 'ip blocked' THEN 1 END) AS ip_blocked,
         COUNT(CASE WHEN event = 'tracked traffic' AND skip = true AND reason = 'first impressions skip' THEN 1 END) AS first_impressions_skip,
         COUNT(CASE WHEN event = 'tracked traffic' AND skip = true AND reason = 'no endpoint to deliver' THEN 1 END) AS no_endpoint_to_deliver,`;
-    }
+      }
 
       const sqlText = `SELECT ${groupByClause},
           COUNT(CASE WHEN event = 'tracked traffic' THEN 1 END) AS total_clicks,
@@ -199,12 +199,59 @@ class SnowManager {
         WHERE cmp IN (${placeholders}) AND DATE(CONVERT_TIMEZONE('America/Ensenada', '${tz}', TS)) BETWEEN '${dateFrom}' and '${dateTo}'
         GROUP BY ${groupByClause};`;
 
-      console.log(sqlText);
+      // console.log(sqlText);
 
       return new Promise((resolve, reject) => {
         this.snowConnect.execute({
           sqlText: sqlText,
           binds: cmps,
+          complete: function (err, stmt, rows) {
+            if (err) {
+              console.error("Failed to execute statement due to the following error: " + err.message);
+              reject(err);
+            } else {
+              resolve(rows);
+            }
+          },
+        });
+      });
+    } catch (err) {
+      console.log(err.message);
+      return undefined
+    }
+  }
+
+  async drillDown(
+    whereQuery: string,
+    groupBy: string[] = ["cmp"],
+    includeReasons: boolean = false
+  ): Promise<any[]> {
+    try {
+      const groupByClause = groupBy?.join(', ');
+      let reasonQueryPart = '';
+      if (includeReasons) {
+        reasonQueryPart = `COUNT(CASE WHEN event = 'tracked traffic' AND skip = true AND reason = 'query rules skip' THEN 1 END) AS query_rules_skip,
+        COUNT(CASE WHEN event = 'tracked traffic' AND skip = true AND reason = 'ip blocked' THEN 1 END) AS ip_blocked,
+        COUNT(CASE WHEN event = 'tracked traffic' AND skip = true AND reason = 'first impressions skip' THEN 1 END) AS first_impressions_skip,
+        COUNT(CASE WHEN event = 'tracked traffic' AND skip = true AND reason = 'no endpoint to deliver' THEN 1 END) AS no_endpoint_to_deliver,`;
+      }
+
+      const sqlText = `SELECT ${groupByClause},
+          COUNT(CASE WHEN event = 'tracked traffic' THEN 1 END) AS total_clicks,
+          COUNT(CASE WHEN event = 'tracked traffic' AND skip = false THEN 1 END) AS got_to_bp,
+          COUNT(CASE WHEN event = 'tracked traffic' AND skip = true THEN 1 END) AS got_to_wp,
+          COUNT(CASE WHEN event = 'event:lpclick' THEN 1 END) AS clicked_on_bp,
+          ${reasonQueryPart}
+          COUNT(CASE WHEN event = 'event:conv' THEN 1 END) AS conv
+        FROM fire_sys.public.events as a LEFT JOIN fire_sys.public.skip_reasons_list as b ON a.sr = b.id
+        ${whereQuery}
+        GROUP BY ${groupByClause};`;
+
+      console.log(sqlText);
+
+      return new Promise((resolve, reject) => {
+        this.snowConnect.execute({
+          sqlText: sqlText,
           complete: function (err, stmt, rows) {
             if (err) {
               console.error("Failed to execute statement due to the following error: " + err.message);

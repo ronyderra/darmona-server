@@ -39,7 +39,7 @@ export const getCharacters = async (req: Request, res: Response) => {
   const { path } = req.query;
   const resp = await s3plfm.getAllFiles(path, process.env.ASSETS_BUCKET);
   const data =
-    resp?.Contents.length > 0
+    resp?.Contents?.length > 0
       ? resp?.Contents?.map((i) => i.Key)
       : resp.CommonPrefixes.map((i) => i.Prefix);
   if (data) {

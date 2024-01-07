@@ -23,7 +23,7 @@ export const getRows = async (req: Request, res: Response) => {
   const { from, to, cmp } = req.query;
 
   const resp = await snowManager.getRows(from, to, cmp);
-  if (resp.length > 100) {
+  if (resp?.length > 100) {
     res.status(200).json({ resp: resp.slice(0, 100) });
     return;
   }
@@ -74,3 +74,20 @@ export const getTrkAnalytics = async (req: any, res: Response) => {
     return res.status(200).send(undefined);
   }
 };
+
+export const drillDown = async (req: any, res: Response) => {
+  try {
+    const { whereQuery, groupBy, includeReasons } = req.body;
+    console.log({ whereQuery, groupBy, includeReasons });
+
+    const resp = await snowManager.drillDown(whereQuery, groupBy, includeReasons);
+    console.log({resp});
+    
+    return res.status(200).json(resp);
+
+  } catch (error) {
+    console.log("in here");
+    
+    console.log(error.message);
+  }
+}
