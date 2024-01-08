@@ -81,13 +81,19 @@ export const drillDown = async (req: any, res: Response) => {
     console.log({ whereQuery, groupBy, includeReasons });
 
     const resp = await snowManager.drillDown(whereQuery, groupBy, includeReasons);
-    console.log({resp});
-    
-    return res.status(200).json(resp);
+    console.log({ resp });
+
+    for (let index = 0; index < resp.length; index++) {
+      const element = resp[index];
+      element.nodes = []
+      element.id = index
+    }
+
+    return res.status(200).json({ type: groupBy, resp: resp });
 
   } catch (error) {
     console.log("in here");
-    
+
     console.log(error.message);
   }
 }
